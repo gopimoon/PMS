@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<!-- Specify a JDBC datasource -->
+	<Resource name="jdbc/ark" 
+	auth="Container"
+	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+		type="javax.sql.DataSource" 
+		username="root"
+	    password="admin"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/arken"
+		maxActive="1000" 
+		maxIdle="1000"
+		initialSize="100"
+		validationQuery="SELECT 1"
+        validationInterval="30000"
+        removeAbandoned="true"
+        removeAbandonedTimeout="600"
+        abandonWhenPercentageFull="500"
+        closeMethod="close"
+         />
+
+</Context>
+ 
