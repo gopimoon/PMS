@@ -8,17 +8,15 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
+
+import com.arken.connection.InitCon;
 import com.arken.finalquote.web.model.FinalQuoteBean;
 
 public class FinalQuoteDB 
 {
 
-	private static DataSource dataSource;
+	/*private static DataSource dataSource;
 	private static Connection con;
 	
 	//Function for connection created for context.xml access for multiple way
@@ -39,16 +37,15 @@ public class FinalQuoteDB
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 	
 	
 	public static int SaveFinalQuote(FinalQuoteBean fqb) throws SQLException
 	{
 		int status=0;
 		
-		FinalQuoteDB fqd=new FinalQuoteDB();
-		fqd.init();
-		con=dataSource.getConnection();
+		InitCon it = new InitCon();
+		Connection con = it.InitConnection();
 		PreparedStatement ps;
 		
 		try
@@ -86,14 +83,62 @@ public class FinalQuoteDB
 	
 	
 	
+	//Function for update the Final Quote value
+	
+	
+	
+	public static int UpdateFinalQuote(FinalQuoteBean fqb) throws SQLException
+	{
+		int status=0;
+		
+		InitCon it = new InitCon();
+		Connection con = it.InitConnection();
+		PreparedStatement ps;
+		
+		try
+		{
+			con.setAutoCommit(false);
+			ps=con.prepareStatement("UPDATE `arken`.`final_quote` SET `description` = ?,`model` = ?,`qty` = ?,`units` = ?,"
+					+ "`unitprice` = ?,`totalprice` = ?,`insunitprice` = ?,`instotalprice` = ? WHERE project_id = ? and s_no = ? and `quote_id` = ?");
+			
+			
+			
+			ps.setString(1, fqb.getDescription());
+			ps.setString(2, fqb.getModel());
+			ps.setString(3, fqb.getQty());
+			ps.setString(4, fqb.getUnits());
+			ps.setString(5, fqb.getUnitprice());
+			ps.setString(6, fqb.getTotalprice());
+			ps.setString(7, fqb.getInsunitprice());
+			ps.setString(8, fqb.getInstotalprice());
+			ps.setInt(9, fqb.getProjectid());
+			ps.setInt(10, fqb.getSno());
+			ps.setInt(11, fqb.getQuoteid());
+			
+			ps.executeUpdate();
+			con.commit();
+			
+			status=1;
+			con.close();
+		}
+		catch (SQLException e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return status;
+	}	
+	
+	
+	
+	
 	// Funciton for retriving data from finalquote table for display
 	
 	public static ArrayList getFinalQuote(int pid) throws SQLException
 	{
 		
-		FinalQuoteDB fqd=new FinalQuoteDB();
-		fqd.init();
-		con=dataSource.getConnection();
+		InitCon it = new InitCon();
+		Connection con = it.InitConnection();
 		PreparedStatement ps;
 		ResultSet rs1;
 		ArrayList alFinalQuote = null;
@@ -140,9 +185,8 @@ public class FinalQuoteDB
 		public static ArrayList getItems() throws SQLException
 		{
 			
-			FinalQuoteDB fqd=new FinalQuoteDB();
-			fqd.init();
-			con=dataSource.getConnection();
+			InitCon it = new InitCon();
+			Connection con = it.InitConnection();
 			PreparedStatement ps;
 			ResultSet rs1;
 			ArrayList alitems = null;
@@ -179,12 +223,11 @@ public class FinalQuoteDB
 		
 		// Funciton for retriving data from Total,Subtotal,GST,Discount Test table for display
 		
-			public static ArrayList getTotals() throws SQLException
+			public static ArrayList getTotals(int pid) throws SQLException
 			{
 				
-				FinalQuoteDB fqd=new FinalQuoteDB();
-				fqd.init();
-				con=dataSource.getConnection();
+				InitCon it = new InitCon();
+				Connection con = it.InitConnection();
 				PreparedStatement ps;
 				ResultSet rs1;
 				ArrayList alitems = null;
@@ -198,7 +241,7 @@ public class FinalQuoteDB
 					  		+ "round(sum(instotalprice)*18/100) as gst1, "
 					  		+ "(sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100)) as total, "
 					  		+ "round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100) as discount, "
-					  		+ "((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))-round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100)) as final from final_quote ");
+					  		+ "((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))-round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100)) as final from final_quote where project_id = "+pid+"");
 					 
 					  rs1 = ps.executeQuery();
 					 

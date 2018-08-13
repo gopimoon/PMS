@@ -8,47 +8,20 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
+import com.arken.connection.InitCon;
 import com.arken.customerquote.web.model.CustomerQuoteBean;
 
 public class CustomerQuoteDB 
 {
 
-	private static DataSource dataSource;
-	private static Connection con;
-	
-	//Function for connection created for context.xml access for multiple way
-	
-	public void init() 
-	{
-		try
-		{
-			// Get DataSource
-			Context initContext  = new InitialContext();
-			Context envContext  = (Context)initContext.lookup("java:/comp/env");
-			dataSource = (DataSource)envContext.lookup("jdbc/ark");
-
-			
-		} 
-		catch(NamingException e) 
-		{
-			e.printStackTrace();
-		}
-		
-	}
 	
 	
 	public static int SaveCustomerQuote(CustomerQuoteBean cqb) throws SQLException
 	{
 		int status=0;
 		
-		CustomerQuoteDB cqd=new CustomerQuoteDB();
-		cqd.init();
-		con=dataSource.getConnection();
+		InitCon it = new InitCon();
+		Connection con = it.InitConnection();
 		PreparedStatement ps;
 		
 		try
@@ -90,9 +63,8 @@ public class CustomerQuoteDB
 		public static ArrayList getCustomerQuote(int pid) throws SQLException
 		{
 			
-			CustomerQuoteDB cqd=new CustomerQuoteDB();
-			cqd.init();
-			con=dataSource.getConnection();
+			InitCon it = new InitCon();
+			Connection con = it.InitConnection();
 			PreparedStatement ps;
 			ResultSet rs1;
 			ArrayList alCustomerQuote = null;
@@ -139,9 +111,8 @@ public class CustomerQuoteDB
 			public static ArrayList getItems() throws SQLException
 			{
 				
-				CustomerQuoteDB cqd=new CustomerQuoteDB();
-				cqd.init();
-				con=dataSource.getConnection();
+				InitCon it = new InitCon();
+				Connection con = it.InitConnection();
 				PreparedStatement ps;
 				ResultSet rs1;
 				ArrayList alitems = null;
@@ -178,12 +149,11 @@ public class CustomerQuoteDB
 			
 			// Funciton for retriving data from Total,Subtotal,GST,Discount Test table for display
 			
-				public static ArrayList getTotals() throws SQLException
+				public static ArrayList getTotals(int pid) throws SQLException
 				{
 					
-					CustomerQuoteDB cqd=new CustomerQuoteDB();
-					cqd.init();
-					con=dataSource.getConnection();
+					InitCon it = new InitCon();
+					Connection con = it.InitConnection();
 					PreparedStatement ps;
 					ResultSet rs1;
 					ArrayList alitems = null;
@@ -197,7 +167,7 @@ public class CustomerQuoteDB
 						  		+ "round(sum(instotalprice)*18/100) as gst1, "
 						  		+ "(sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100)) as total, "
 						  		+ "round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100) as discount, "
-						  		+ "((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))-round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100)) as final from customer_quote ");
+						  		+ "((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))-round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100)) as final from customer_quote where project_id="+pid+" ");
 						 
 						  rs1 = ps.executeQuery();
 						 

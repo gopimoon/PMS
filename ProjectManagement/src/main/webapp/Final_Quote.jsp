@@ -1,6 +1,6 @@
 <%@page import="com.arken.connection.InitCon"%>
-<%@page import="com.arken.customerquote.web.dao.CustomerQuoteDB"%>
 <%@page import="java.util.List"%>
+<%@page import="com.arken.finalquote.web.dao.FinalQuoteDB"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
@@ -10,27 +10,29 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.ArrayList"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%
-		CustomerQuoteDB cqd = new CustomerQuoteDB();
+		FinalQuoteDB fqd = new FinalQuoteDB();
+		
 		
 		int pid = Integer.parseInt(request.getParameter("project_id"));
+		
+		System.out.println(pid);
 		ArrayList al;
 		
 		al = new ArrayList();
-		al = cqd.getCustomerQuote(pid);
+		al = fqd.getFinalQuote(pid);
 		
 		
 		ArrayList al1;
 		
 		al1 = new ArrayList();
-		al1 = cqd.getItems();
+		al1 = fqd.getItems();
 		
 		
 		ArrayList al2;
 		
 		al2 = new ArrayList();
-		al2 = cqd.getTotals(pid);
+		al2 = fqd.getTotals(pid);
 		
 		
 
@@ -91,7 +93,7 @@
 			            $.ajax({
 			            
 			            	type: "post",
-			                url: "CustomerQuote", //this is my servlet
+			                url: "FinalQuote", //this is my servlet
 			                
 			                data: 
 			                {
@@ -126,8 +128,8 @@
 		
 		
 		
-		
-		            <%-- function insert(id)
+		<%-- 
+		            function insert(id)
 		      	  	{      
 		      		
 		            	
@@ -198,7 +200,7 @@
 		      			  	
 		      			  		%>			
 		      			  					
-		      			  					b.innerHTML ='' ;
+		      			  					/* b.innerHTML ='' ; */
 						      			 	c.innerHTML = '<input type="text" name="model" id="model" class="form-table" maxlength="25" >';
 						      			 	d.innerHTML = '<input type="text" name="qty" id="qty" class="form-table" maxlength="25" >';
 						      			 	e.innerHTML = '<input type="text" name="units" id="units" class="form-table" maxlength="25" >';
@@ -209,8 +211,8 @@
 						      			
 						            
 			      		   }
-			      	  	} --%>
-		            
+			      	  	}
+		             --%>
 		            
 		            
 		            
@@ -257,7 +259,7 @@
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp?project_id=<%=pid%>">
+          <a class="nav-link" href="index.jsp">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Final Quote</span>
           </a>
@@ -631,7 +633,7 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i>Customer Quote</div>
+          <i></i>Final Quote</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
          <form action=# method="post">
@@ -639,12 +641,12 @@
          <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
          <input type="hidden" name="updateflag" id="updateflag" value="NO">
          <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
-         <legend>Customer Quote PO</legend>
+         <legend>Final Quote PO</legend>
 								
 											<div class="form-group">
 										   <label class="col-md-2 control-label" >Purchase Order</label>  
 										  	
-											    <table  class="table-bordered table-hover" id="investigationtable" align="center">
+											    <table  class="table-bordered table-hover" id="investigationtable">
 												<tr>
 												<th class="text-center" colspan="5">Mapleton Apartment</th>
 												<th class="text-center" colspan="2">Supply of Meterials</th>
@@ -731,7 +733,6 @@
 												<td class="text-center"></td>
 									    		<td class="text-center"><b><%=pList2.get(1)%></b></td>
 								              </tr>
-								              
 											<%-- <tr>
 													
 											<td colspan="6"><b>GST on 18 %</b></td>
@@ -747,8 +748,8 @@
 										<td class="text-center"><b><%=pList2.get(4)%></b></td>
 										
 									    		
-										</tr>
-										<tr>
+										</tr> --%>
+										<%-- <tr>
 													
 										<td colspan="8"><b>Customer special Discount 5 %</b></td>
 										<td class="text-center"><b><%=pList2.get(5)%></b></td>
@@ -769,6 +770,7 @@
 						                
 									  %>
 									  <tr>
+									  <br>
 										<td><input type="text" name="sno" id="sno" maxlength="25"></td>
 										<td>
 												<select id="description" name="description">
@@ -821,53 +823,12 @@
 									    <td><input type="text" name="totalprice" id="totalprice" class="form-table" maxlength="25" ></td>
 										<td><input type="text" name="insunitprice" id="insunitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
 								 		<td><input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" ></td>
-								 		
+							 			
 									</tr>
 									  
 									
 									  </table>	
-									  <%-- <select id="selectid" name="selectid">
-									  <option>Select</option>
-									  <%
 									 
-					      			  
-			      			 			
-			      			  			Context initContext2  = new InitialContext();
-					      				Context envContext2  = (Context)initContext2.lookup("java:/comp/env");
-					      				DataSource dataSource2 = (DataSource)envContext2.lookup("jdbc/ark");
-					      				
-					      				Connection connection=dataSource2.getConnection();
-					      				
-					      				PreparedStatement ps1;
-					      				ResultSet rs2;
-					      		        
-					      				  try
-					      			        { 
-					      					  ps1 = connection.prepareStatement("SELECT * FROM arken.items;");
-					      					  
-					      					  rs2 = ps1.executeQuery();
-					      					 %>
-					      					
-					      					<%
-					      					  while (rs2.next())
-					      					  {%>
-												  <option value="<%=rs2.getString(2)%>"><%=rs2.getString(2)%></option>
-											<%	  
-												
-					      					  }
-					      					  
-					      					  connection.close();
-					      					
-					      					}
-					      			        catch (SQLException e)
-					      			        {
-					      			        	e.printStackTrace();
-					      			        	
-					      			        }
-					      				
-			      			  		%>	
-									
-									   </select> --%>
 									  <input type="button"  class="button" id="investigationtable" onclick="insert('investigationtable')" value="Insert Row">
 									  <input type="button" class="button" id="investtable" value="Save Row" />
 									  

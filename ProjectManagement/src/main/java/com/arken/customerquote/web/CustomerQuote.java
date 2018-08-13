@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.arken.customerquote.web.dao.CustomerQuoteDB;
 import com.arken.customerquote.web.model.CustomerQuoteBean;
 
-@WebServlet()
+@WebServlet("/CustomerQuote")
 public class CustomerQuote extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

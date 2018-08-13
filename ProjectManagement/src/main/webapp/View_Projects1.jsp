@@ -1,40 +1,9 @@
-<%@page import="com.arken.connection.InitCon"%>
-<%@page import="com.arken.customerquote.web.dao.CustomerQuoteDB"%>
-<%@page import="java.util.List"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="javax.naming.InitialContext"%>
-<%@page import="javax.naming.Context"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="javax.sql.DataSource"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.ArrayList"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%
-		CustomerQuoteDB cqd = new CustomerQuoteDB();
-		
-		int pid = Integer.parseInt(request.getParameter("project_id"));
-		ArrayList al;
-		
-		al = new ArrayList();
-		al = cqd.getCustomerQuote(pid);
-		
-		
-		ArrayList al1;
-		
-		al1 = new ArrayList();
-		al1 = cqd.getItems();
-		
-		
-		ArrayList al2;
-		
-		al2 = new ArrayList();
-		al2 = cqd.getTotals(pid);
-		
-		
+
+int pid =Integer.parseInt(request.getParameter("project_name"));
 
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,185 +26,7 @@
 
    <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
    
-   <script>
    
-// Function for add row and save 
-   
-	$(document).ready(function() 
-	{
-		            $('#investtable').click(function ()
-			        {
-		            	var updateflag = $('#updateflag').val();
-	                	var projectid = $('#projectid').val();
-	                	var quoteid = $('#quoteid').val();
-			        	var sno = $('#sno').val();
-			        	var description = $('#description').val();
-			        	var model = $('#model').val();
-			        	var qty = $('#qty').val();
-			        	var units = $('#units').val();
-			        	var unitprice = $('#unitprice').val();
-			        	var totalprice = $('#totalprice').val();
-			        	var insunitprice = $('#insunitprice').val();
-			        	var instotalprice = $('#instotalprice').val();
-			        	
-			        	
-			        	if (sno == '') 
-			        	{
-			        		
-			                alert('Date-field is empty.');
-			               
-			                return false;
-			            }
-			        	
-			        	
-			            $.ajax({
-			            
-			            	type: "post",
-			                url: "CustomerQuote", //this is my servlet
-			                
-			                data: 
-			                {
-			                	TableIdentifier :"quotetable",
-			                	updateflag: $('#updateflag').val(),
-			                	projectid: $('#projectid').val(),
-			                	quoteid: $('#quoteid').val(),
-			                	sno: $('#sno').val(),
-			                	description: $('#description').val(),
-			                	model :$('#model').val(),
-			                	qty :$('#qty').val(),
-			                	units :$('#units').val(),
-			                	unitprice :$('#unitprice').val(),
-			                	totalprice :$('#totalprice').val(),
-			                	insunitprice :$('#insunitprice').val(),
-			                	instotalprice :$('#instotalprice').val(),
-			                	
-			                },
-			                
-			                success: function(msg)
-			                {      
-			                	window.location.reload(true);
-			                        $('#output').append(msg);
-			                }
-			                
-			            });
-			          
-			          });
-	
-		}); 
-		
-		
-		
-		
-		
-		            <%-- function insert(id)
-		      	  	{      
-		      		
-		            	
-		      		 if((id=="investigationtable"))
-		      		   { 
-		      			 	
-		      				
-		      			    var filas = document.getElementById("investigationtable").rows.length;
-		      			 
-		      			    var x = document.getElementById(id).insertRow(filas);
-		      			    if(!document.getElementById("sno")=='')
-		      				{
-		      					
-		      					alert("Please enter date field and click to save");
-		      					return false;
-		      				}	
-		      			    
-		      			    var a = x.insertCell(0);
-		      			    var b = x.insertCell(1);                                          
-		      			  	var c= x.insertCell(2);
-		      			 	var d= x.insertCell(3);
-		      			  	var e= x.insertCell(4);
-		      			  	var f= x.insertCell(5);
-		      			  	var g= x.insertCell(6);
-		      			  	var h= x.insertCell(7);
-		      			  	var i= x.insertCell(8);
-		      			  	
-		      			    a.innerHTML = '<input type="text" name="sno" id="sno" maxlength="25">';
-		      			  	<%
-				      			  
-		      			 			
-		      			  			Context initContext  = new InitialContext();
-				      				Context envContext  = (Context)initContext.lookup("java:/comp/env");
-				      				DataSource datasource = (DataSource)envContext.lookup("jdbc/ark");
-				      				
-				      				Connection con=datasource.getConnection();
-				      				
-				      				PreparedStatement ps;
-				      				ResultSet rs1;
-				      		        ArrayList al2 = new ArrayList();
-				      		        
-				      				  try
-				      			        { 
-				      					  ps = con.prepareStatement("SELECT * FROM arken.items;");
-				      					  
-				      					  rs1 = ps.executeQuery();
-				      					 %>
-				      					
-				      					<%
-				      					  while (rs1.next())
-				      					  {
-				      						al2.add(rs1.getString(2)) ;
-				      						  
-				      					  }
-				      					  %>
-				      					
-				      						
-				      					<%
-				      					System.out.println(al2);
-				      					  con.close();
-				      					
-				      					}
-				      			        catch (SQLException e)
-				      			        {
-				      			        	e.printStackTrace();
-				      			        	
-				      			        }
-		      			  	
-		      			  		%>			
-		      			  					
-		      			  					b.innerHTML ='' ;
-						      			 	c.innerHTML = '<input type="text" name="model" id="model" class="form-table" maxlength="25" >';
-						      			 	d.innerHTML = '<input type="text" name="qty" id="qty" class="form-table" maxlength="25" >';
-						      			 	e.innerHTML = '<input type="text" name="units" id="units" class="form-table" maxlength="25" >';
-						      			 	f.innerHTML = '<input type="text" name="unitprice" id="unitprice" class="form-table" maxlength="25" >';
-						      			 	g.innerHTML = '<input type="text" name="totalprice" id="totalprice" class="form-table" maxlength="25" >';
-						      			 	h.innerHTML = '<input type="text" name="insunitprice" id="insunitprice" class="form-table" maxlength="25" >';
-						      			 	i.innerHTML = '<input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" >';
-						      			
-						            
-			      		   }
-			      	  	} --%>
-		            
-		            
-		            
-		            
-   </script>
-   
-   <script>
-   
-   function multiply()
-   {
-	   var x = document.getElementById("qty").value;
-	   var y = document.getElementById("unitprice").value;
-	   z = x * y;
-	   document.getElementById("totalprice").value = z;
-	   
-	   
-	   var x1 = document.getElementById("qty").value;
-	   var y1 = document.getElementById("insunitprice").value;
-	   z1 = x1 * y1;
-	   document.getElementById("instotalprice").value = z1;
-	  
-   }
-   
-   
-   
-   </script>
  
 </head>
 
@@ -257,14 +48,14 @@
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp?project_id=<%=pid%>">
+          <a class="nav-link" href="index.jsp">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Final Quote</span>
           </a>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="Customer_Quote.jsp?project_id=<%=pid%>">
+          <a class="nav-link" href="Customer_Quote.jsp?project_id=<%=1%>">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Customer Quote</span>
           </a>
@@ -631,247 +422,20 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i>Customer Quote</div>
+          <i></i><b>Quotations</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action=# method="post">
+         <form action="#" method="post">
          
-         <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
+         <input type="hidden" name="projectid" id="projectid" value="<%=1%>">
          <input type="hidden" name="updateflag" id="updateflag" value="NO">
-         <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
-         <legend>Customer Quote PO</legend>
+         <input type="hidden" name="quoteid" id="quoteid" value="1">
+         
 								
-											<div class="form-group">
-										   <label class="col-md-2 control-label" >Purchase Order</label>  
-										  	
-											    <table  class="table-bordered table-hover" id="investigationtable" align="center">
-												<tr>
-												<th class="text-center" colspan="5">Mapleton Apartment</th>
-												<th class="text-center" colspan="2">Supply of Meterials</th>
-												<th class="text-center" colspan="2">Installation of Materials</th>
-												</tr>
-												<tr>
-													<th class="text-center" rowspan="2">S.No</th>
-													<th class="text-center" rowspan="2">Discription</th>
-													<th class="text-center" rowspan="2">Make/Model</th>
-													<th class="text-center" rowspan="2">Qty</th>
-													<th class="text-center" rowspan="2">Units</th>
-													<th class="text-center" rowspan="">Unitprice</th>
-													<th class="text-center" colspan="">Total Price</th>
-													<th class="text-center" rowspan="">Unit Price</th>
-													<th class="text-center" rowspan="">Total Price</th>
-												</tr>
-												<tr>
-												</tr>
-									
-									 
-									 <%
-						                int count = 0;
-						                String color = "#F9EBB3";
-						             
-						                if (!al.isEmpty()) 
-						               {
-						                  
-						                    Iterator itr = al.iterator();
-						                    
-						                    while (itr.hasNext()) 
-						                    {
-						 
-						                        if ((count % 2) == 0) 
-						                        {
-						                            color = "#eeffee";
-						                        }
-						                        count++;
-						                        ArrayList pList = (ArrayList) itr.next();
-						           		 %>
-								            <tr style="background-color:<%=color%>;">
-								            
-								                <td class="text-center"><%=pList.get(0)%></td>
-								                <td class="text-center"><%=pList.get(1)%></td>
-								                <td class="text-center"><%=pList.get(2)%></td>
-								                <td class="text-center"><%=pList.get(3)%></td>
-								                <td class="text-center"><%=pList.get(4)%></td>
-								                <td class="text-center"><%=pList.get(5)%></td>
-								                <td class="text-center"><%=pList.get(6)%></td>
-								                <td class="text-center"><%=pList.get(7)%></td>
-								                <td class="text-center"><%=pList.get(8)%></td>
-								               
-								            </tr>
-						            	<%
-						                   }
-						                }
-						                
-									  %>
-									  
-									  			
-									  			
-									  			<%
-						                int count2 = 0;
-						                String color2 = "#F9EBB3";
-						             
-						                if (!al2.isEmpty()) 
-						               {
-						                  
-						                    Iterator itr2 = al2.iterator();
-						                    
-						                    while (itr2.hasNext()) 
-						                    {
-						 
-						                        if ((count2 % 2) == 0) 
-						                        {
-						                            color2 = "#eeffee";
-						                        }
-						                        count2++;
-						                        ArrayList pList2 = (ArrayList) itr2.next();
-						           		 %>
-								            
-								            <tr>
-									  			<td colspan="6"><b>Sub Total</b></td>
-								                <td class="text-center"><b><%=pList2.get(0)%></b></td>
-												<td class="text-center"></td>
-									    		<td class="text-center"><b><%=pList2.get(1)%></b></td>
-								              </tr>
-								              
-											<%-- <tr>
-													
-											<td colspan="6"><b>GST on 18 %</b></td>
-											<td class="text-center"><b><%=pList2.get(2)%></b></td>
-											<td class="text-center"></td>
-										    <td class="text-center"><b><%=pList2.get(3)%></b></td>
-									    
-												</tr> --%>
-												
-												<%-- <tr>
-													
-										<td colspan="8"><b>Total</b></td>
-										<td class="text-center"><b><%=pList2.get(4)%></b></td>
+								<div class="form-group">
 										
-									    		
-										</tr>
-										<tr>
-													
-										<td colspan="8"><b>Customer special Discount 5 %</b></td>
-										<td class="text-center"><b><%=pList2.get(5)%></b></td>
-										
-												</tr>
-												
-												
-												<tr>
-													
-										<td colspan="8"><b>Grand Total After 5 % Discount</b></td>
-										<td class="text-center"><b><%=pList2.get(6)%></b></td>
-										
-												</tr> --%>
-								            
-						            	<%
-						                   }
-						                }
-						                
-									  %>
-									  <tr>
-										<td><input type="text" name="sno" id="sno" maxlength="25"></td>
-										<td>
-												<select id="description" name="description">
-											 	 <option>Select</option>
-											  <%
-											 
-							      			  
-					      			 			
-											  	InitCon it = new InitCon();
-												Connection con = it.InitConnection();
-							      				
-							      				PreparedStatement ps1;
-							      				ResultSet rs2;
-							      		        
-							      				  try
-							      			        { 
-							      					  ps1 = con.prepareStatement("SELECT * FROM arken.items;");
-							      					  
-							      					  rs2 = ps1.executeQuery();
-							      					 %>
-							      					
-							      					<%
-							      					  while (rs2.next())
-							      					  {%>
-														  <option value="<%=rs2.getString(2)%>"><%=rs2.getString(2)%></option>
-													<%	  
-														
-							      					  }
-							      					  
-							      					  con.close();
-							      					  
-							      					}
-							      			        catch (SQLException e)
-							      			        {
-							      			        	e.printStackTrace();
-							      			        	
-							      			        }
-							      				
-					      			  		%>	
-											
-											 </select>
-										
-										
-										
-										</td>
-										<td><input type="text" name="model" id="model" class="form-table" maxlength="25" ></td>
-										<td><input type="text" name="qty" id="qty" onChange="multiply()" class="form-table" maxlength="25" ></td>
-										<td><input type="text" name="units" id="units" class="form-table" maxlength="25" ></td>
-									    <td><input type="text" name="unitprice" id="unitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
-									    <td><input type="text" name="totalprice" id="totalprice" class="form-table" maxlength="25" ></td>
-										<td><input type="text" name="insunitprice" id="insunitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
-								 		<td><input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" ></td>
-								 		
-									</tr>
-									  
-									
-									  </table>	
-									  <%-- <select id="selectid" name="selectid">
-									  <option>Select</option>
-									  <%
-									 
-					      			  
-			      			 			
-			      			  			Context initContext2  = new InitialContext();
-					      				Context envContext2  = (Context)initContext2.lookup("java:/comp/env");
-					      				DataSource dataSource2 = (DataSource)envContext2.lookup("jdbc/ark");
-					      				
-					      				Connection connection=dataSource2.getConnection();
-					      				
-					      				PreparedStatement ps1;
-					      				ResultSet rs2;
-					      		        
-					      				  try
-					      			        { 
-					      					  ps1 = connection.prepareStatement("SELECT * FROM arken.items;");
-					      					  
-					      					  rs2 = ps1.executeQuery();
-					      					 %>
-					      					
-					      					<%
-					      					  while (rs2.next())
-					      					  {%>
-												  <option value="<%=rs2.getString(2)%>"><%=rs2.getString(2)%></option>
-											<%	  
-												
-					      					  }
-					      					  
-					      					  connection.close();
-					      					
-					      					}
-					      			        catch (SQLException e)
-					      			        {
-					      			        	e.printStackTrace();
-					      			        	
-					      			        }
-					      				
-			      			  		%>	
-									
-									   </select> --%>
-									  <input type="button"  class="button" id="investigationtable" onclick="insert('investigationtable')" value="Insert Row">
-									  <input type="button" class="button" id="investtable" value="Save Row" />
-									  
-									  
+										<b><a href="Final_Quote1.jsp?project_id=<%=pid%>">Final Quote</a></b><br>
+										<b><a href="Customer_Quote1.jsp?project_id=<%=pid%>">Customer Quote</a></b>
 								</div>
 								</form>
 								</div>
