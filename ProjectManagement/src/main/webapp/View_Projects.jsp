@@ -47,16 +47,16 @@
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="View_Project.jsp">
+          <a class="nav-link" href="index.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">View Projects</span>
+            <span class="nav-link-text">Create Projects</span>
           </a>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="View_Projects.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Customer Quote</span>
+            <span class="nav-link-text">View Projects</span>
           </a>
         </li>
         
@@ -431,6 +431,7 @@
          <input type="hidden" name="quoteid" id="quoteid" value="1">
          
 								<div class="form-group">
+										<legend>Select Project Name :</legend><br>
 										
 										<select name = "project_name" class="form-control">
 										<option value="">Select</option>
@@ -469,7 +470,7 @@
 										</select>
 										
 								</div>
-								<input type="submit" class="button" value="Check">
+								<input type="submit" class="button" value="View">
 								</form>
 								</div>
         

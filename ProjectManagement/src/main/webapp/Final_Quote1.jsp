@@ -65,13 +65,18 @@
    
 	$(document).ready(function() 
 	{
-		            $('#saveupdate').click(function ()
+		            $('.sub').click(function ()
 			        {
+		            	alert(id)
+		            	var cid = this.id;
+		            	alert(cid)
 		            	var updateflag = $('#updateflag').val();
 	                	var projectid = $('#projectid').val();
 	                	var quoteid = $('#quoteid').val();
 			        	var sno = $('#sno').val();
+			        	alert(sno)
 			        	var description = $('#description').val();
+			        	alert(description)
 			        	var model = $('#model').val();
 			        	var qty = $('#qty').val();
 			        	var units = $('#units').val();
@@ -91,7 +96,6 @@
 			        	
 			        	
 			            $.ajax({
-			            
 			            	type: "post",
 			                url: "FinalQuote", //this is my servlet
 			                
@@ -127,6 +131,31 @@
 		
 		
 		
+		
+	 function writeabdata(sno,qty) {
+		
+		alert("test")
+		alert(sno)
+	    alert ("table = "+sno+" id = "+qty); //+" field = \'"+field+"\' value = "+value
+
+	    var dataObj = {
+	        'table': sno,
+	        'id': qty
+	    };
+	    dataObj[field] = mapstring;
+
+	    $.ajax({
+	        type: 'GET',
+	        url: 'writeabdata.php',
+	        data: dataObj,
+	        success: function (data) {
+	            alert ("data Saved "+ data);
+	        }
+	    });
+	} 
+		
+	
+	
 		
 		<%-- 
 		            function insert(id)
@@ -220,21 +249,21 @@
    
    <script>
    
-   function multiply()
-   {
-	   var x = document.getElementById("qty").value;
-	   var y = document.getElementById("unitprice").value;
-	   z = x * y;
-	   document.getElementById("totalprice").value = z;
-	   
-	   
-	   var x1 = document.getElementById("qty").value;
-	   var y1 = document.getElementById("insunitprice").value;
-	   z1 = x1 * y1;
-	   document.getElementById("instotalprice").value = z1;
-	  
-   }
    
+   function multiply(val,val1,val2,val3,val4)
+   {
+	  
+	   var x = document.getElementById(val).value;
+	   var y = document.getElementById(val1).value;
+	   z = x * y;
+	   document.getElementById(val2).value = z;
+	   
+	   
+	   var x1 = document.getElementById(val).value;
+	   var y1 = document.getElementById(val3).value;
+	   z1 = x1 * y1;
+	   document.getElementById(val4).value = z1;
+   }   
    
    
    </script>
@@ -261,14 +290,14 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="index.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Final Quote</span>
+            <span class="nav-link-text">Create Projects</span>
           </a>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="Customer_Quote.jsp?project_id=<%=pid%>">
+          <a class="nav-link" href="View_Projects.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Customer Quote</span>
+            <span class="nav-link-text">View Projects</span>
           </a>
         </li>
         
@@ -636,12 +665,12 @@
           <i></i>Final Quote</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="FinalQuote" method="post">
+         <%-- <form action="FinalQuote" method="post">
          
          <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
          <input type="hidden" name="updateflag" id="updateflag" value="YES">
          <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
-         <input type="hidden" name="TableIdentifier" id="TableIdentifier" value="updatequotetable">
+         <input type="hidden" name="TableIdentifier" id="TableIdentifier" value="updatequotetable"> --%>
          <legend>Final Quote PO</legend>
 								
 											<div class="form-group">
@@ -687,67 +716,35 @@
 						                        count++;
 						                        ArrayList pList = (ArrayList) itr.next();
 						           		 %>
-								            <tr style="background-color:<%=color%>;">
+						           		<form action="FinalQuote" method="post">
+         
+									         <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
+									         <input type="hidden" name="updateflag" id="updateflag" value="YES">
+									         <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
+									         <input type="hidden" name="TableIdentifier" id="TableIdentifier" value="updatequotetable">
+								            	<tr style="background-color:<%=color%>;">
 								            
-								                <td class="text-center"><input typ="text" name="sno" id="sno" value="<%=pList.get(0)%>"></td>
-								                <%-- <td>
-												<select id="description" name="description">
-											 	 <option>Select</option>
-											  <%
-											 
-							      			  
-					      			 			
-											  	InitCon it = new InitCon();
-												Connection con = it.InitConnection();
-							      				
-							      				PreparedStatement ps1;
-							      				ResultSet rs2;
-							      		        
-							      				  try
-							      			        { 
-							      					  ps1 = con.prepareStatement("SELECT * FROM arken.items;");
-							      					  
-							      					  rs2 = ps1.executeQuery();
-							      					 %>
-							      					
-							      					<%
-							      					  while (rs2.next())
-							      					  {%>
-														  <option value="<%=rs2.getString(2)%>"><%=rs2.getString(2)%></option>
-													<%	  
-														
-							      					  }
-							      					  
-							      					  con.close();
-							      					  
-							      					}
-							      			        catch (SQLException e)
-							      			        {
-							      			        	e.printStackTrace();
-							      			        	
-							      			        }
-							      				
-					      			  		%>	
-											
-											 </select> --%>
-								                
-								                <td class="text-center"><input typ="text" name="description" id="description"  value="<%=pList.get(1)%>"></td>
-								                <td class="text-center"><input typ="text" name="model" id="model" value="<%=pList.get(2)%>"></td>
-								                <td class="text-center"><input typ="text" name="qty" id="qty" value="<%=pList.get(3)%>" onChange="multiply()"></td>
-								                <td class="text-center"><input typ="text" name="units" id="units" value="<%=pList.get(4)%>"></td>
-								                <td class="text-center"><input typ="text" name="unitprice" id="unitprice" value="<%=pList.get(5)%>" onChange="multiply()"></td>
-								                <td class="text-center"><input typ="text" name="totalprice" id="totalprice" value="<%=pList.get(6)%>"></td>
-								                <td class="text-center"><input typ="text" name="insunitprice" id="insunitprice" value="<%=pList.get(7)%>" onChange="multiply()"></td>
-								                <td class="text-center"><input typ="text" name="instotalprice" id="instotalprice" value="<%=pList.get(8)%>"></td>
-								                <td><input type="submit" class="button"  value="Save Row" /></td>
-								                
+								                <td class="text-center"><input typ="text" name="sno" id="sno" value="<%=pList.get(0)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="description" id="description<%=pList.get(0)%>"  value="<%=pList.get(1)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="model" id="model<%=pList.get(0)%>" value="<%=pList.get(2)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="qty" id="qty<%=pList.get(0)%>" value="<%=pList.get(3)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
+								                <td class="text-center"><input type="text" name="units" id="units<%=pList.get(0)%>" value="<%=pList.get(4)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="unitprice" id="unitprice<%=pList.get(0)%>" value="<%=pList.get(5)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
+								                <td class="text-center"><input type="text" name="totalprice" id="totalprice<%=pList.get(0)%>" value="<%=pList.get(6)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="insunitprice" id="insunitprice<%=pList.get(0)%>" value="<%=pList.get(7)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
+								                <td class="text-center"><input type="text" name="instotalprice" id="instotalprice<%=pList.get(0)%>" value="<%=pList.get(8)%>" readonly></td>
+								              <%--  <td><a href="" data-id="<%=pList.get(0)%>" class="clik_for_fetch">Update</a></td>
+								               <td><input type="button"  onClick="writeabdata(this.sno,this.qty);">check</a></td> --%>
+									  			<td><input type="submit" value="Save Row"></td>
+									  			</tr>
+									  	</form>
 						            	<%
 						                   }
 						                }
 						                
 									  %>
 									  
-									  			
+									  		
 									  			
 									  			<%
 						                int count2 = 0;
@@ -811,6 +808,7 @@
 						                }
 						                
 									  %>
+									  
 									  <%-- <tr>
 										<td><input type="text" name="sno" id="sno" maxlength="25"></td>
 										<td>
@@ -866,7 +864,6 @@
 								 		<td><input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" ></td>
 							 			
 									</tr> --%>
-									  
 									
 									  </table>	
 									 <!-- 
@@ -875,7 +872,7 @@
 									  
 									  
 								</div>
-								</form>
+								<!-- </form> -->
 								</div>
          </div>
         </div>

@@ -50,14 +50,14 @@ int pid =Integer.parseInt(request.getParameter("project_name"));
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="index.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Final Quote</span>
+            <span class="nav-link-text">Create Projects</span>
           </a>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="Customer_Quote.jsp?project_id=<%=1%>">
+          <a class="nav-link" href="View_Projects.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Customer Quote</span>
+            <span class="nav-link-text">View Projects</span>
           </a>
         </li>
         

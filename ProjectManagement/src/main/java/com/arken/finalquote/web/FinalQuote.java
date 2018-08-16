@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -124,11 +125,11 @@ public class FinalQuote extends HttpServlet {
 				}
 				
 				
-				/*if(status>0)
+				if(status>0)
 				{
-					RequestDispatcher rd = request.getRequestDispatcher("Final_Quote.jsp?project_id="+fqb.getProjectid()+"");
+					RequestDispatcher rd = request.getRequestDispatcher("Final_Quote1.jsp?project_id="+fqb.getProjectid()+"");
 					rd.forward(request, response);
-				}*/
+				}
 			}
 			catch (SQLException e) 
 			{

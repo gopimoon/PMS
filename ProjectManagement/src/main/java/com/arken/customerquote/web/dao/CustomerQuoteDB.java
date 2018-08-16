@@ -58,6 +58,55 @@ public class CustomerQuoteDB
 	}	
 	
 	
+	//Function for update the Final Quote value
+	
+	
+	
+		public static int UpdateCustomerQuote(CustomerQuoteBean cqb) throws SQLException
+		{
+			int status=0;
+			
+			InitCon it = new InitCon();
+			Connection con = it.InitConnection();
+			PreparedStatement ps;
+			
+			try
+			{
+				con.setAutoCommit(false);
+				ps=con.prepareStatement("UPDATE `arken`.`customer_quote` SET `description` = ?,`model` = ?,`qty` = ?,`units` = ?,"
+						+ "`unitprice` = ?,`totalprice` = ?,`insunitprice` = ?,`instotalprice` = ? WHERE project_id = ? and s_no = ? and `quote_id` = ?");
+				
+				
+				
+				ps.setString(1, cqb.getDescription());
+				ps.setString(2, cqb.getModel());
+				ps.setString(3, cqb.getQty());
+				ps.setString(4, cqb.getUnits());
+				ps.setString(5, cqb.getUnitprice());
+				ps.setString(6, cqb.getTotalprice());
+				ps.setString(7, cqb.getInsunitprice());
+				ps.setString(8, cqb.getInstotalprice());
+				ps.setInt(9, cqb.getProjectid());
+				ps.setInt(10, cqb.getSno());
+				ps.setInt(11, cqb.getQuoteid());
+				
+				ps.executeUpdate();
+				con.commit();
+				
+				status=1;
+				con.close();
+			}
+			catch (SQLException e) 
+			{
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return status;
+		}	
+	
+	
+	
+	
 	// Funciton for retriving data from finalquote table for display
 	
 		public static ArrayList getCustomerQuote(int pid) throws SQLException
