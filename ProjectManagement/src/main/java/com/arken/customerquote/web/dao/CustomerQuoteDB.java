@@ -155,7 +155,7 @@ public class CustomerQuoteDB
 		
 		
 		
-		// Funciton for retriving data from Investication Test table for display
+		// Funciton for retriving data from Items table for display
 		
 			public static ArrayList getItems() throws SQLException
 			{

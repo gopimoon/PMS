@@ -1,4 +1,17 @@
+<%
+
+	int pid = Integer.parseInt(request.getParameter("project_name"));
+	int sid = Integer.parseInt(request.getParameter("supplierid"));
+
+%>
+
+
 <!DOCTYPE html>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="com.arken.connection.InitCon"%>
 <html lang="en">
 
 <head>
@@ -18,6 +31,9 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
 
+   <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
+   
+   
  
 </head>
 
@@ -49,13 +65,6 @@
           <a class="nav-link" href="View_Projects.jsp">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">View Projects</span>
-          </a>
-        </li>	
-        
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="Suppliers.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Suppliers</span>
           </a>
         </li>
         
@@ -420,24 +429,61 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i>Projects</div>
+          <i></i><b>View Suppliers List</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="SaveProject" method="post">
+         <form action="Suppliers_2.jsp" method="post">
          
+         <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
+         <input type="hidden" name="updateflag" id="updateflag" value="NO">
+         <input type="hidden" name="quoteid" id="quoteid" value="1">
+         
+								<div class="form-group">
+										<legend>Select Suppliers Name :</legend><br>
+										
+										<select name = "supplier_name" class="form-control">
+										<option value="">Select</option>
+										<%
+										InitCon it = new InitCon();
+										Connection con = it.InitConnection();
+					      				
+					      				PreparedStatement ps;
+					      				ResultSet rs;
+					      		        
+					      				  try
+					      			        { 
+					      					  ps = con.prepareStatement("SELECT * FROM arken.suppliers;");
+					      					  
+					      					  rs = ps.executeQuery();
+					      					 %>
+					      					
+					      					<%
+					      					  while (rs.next())
+					      					  {%>
+												  <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
+											<%	  
+												
+					      					  }
+					      					  
+					      					  con.close();
+					      					  
+					      					}
+					      			        catch (SQLException e)
+					      			        {
+					      			        	e.printStackTrace();
+					      			        	
+					      			        }
+										
+										%>
+										</select>
+										
+								</div>
+								<input type="submit" class="button" value="View">
+								</form>
+								</div>
         
-			<div class="form-group">
-				<label class="col-md-2 control-label" ><b>Project Name</b></label>  
-							   
-					  <input type="text"  name="project_name" id="project_name" >
-					  <input type="submit"  value="Save" />
-									  
-									  
-			</div>
-		</form>
-		
-	</div>
          </div>
+         
         </div>
        <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
       </div>

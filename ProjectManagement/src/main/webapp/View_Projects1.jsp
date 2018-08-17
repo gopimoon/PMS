@@ -47,11 +47,19 @@ int pid =Integer.parseInt(request.getParameter("project_name"));
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Create Projects</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Quotations</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="Final_Quote1.jsp?project_id=<%=pid%>">Final Quotation</a>
+            </li>
+            <li>
+              <a href="Customer_Quote1.jsp?project_id=<%=pid%>">Customer Purchase Order</a>
+            </li>
+          </ul>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -434,8 +442,8 @@ int pid =Integer.parseInt(request.getParameter("project_name"));
 								
 								<div class="form-group">
 										
-										<b><a href="Final_Quote1.jsp?project_id=<%=pid%>">Final Quote</a></b><br>
-										<b><a href="Customer_Quote1.jsp?project_id=<%=pid%>">Customer Quote</a></b>
+										<b><a href="Final_Quote1.jsp?project_id=<%=pid%>">Final Quotation</a></b><br>
+										<b><a href="Customer_Quote1.jsp?project_id=<%=pid%>">Customer Purchase Order</a></b>
 								</div>
 								</form>
 								</div>

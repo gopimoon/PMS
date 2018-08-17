@@ -256,11 +256,19 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Create Projects</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Quotations</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="Final_Quote.jsp?project_id=<%=pid%>">Final Quotation</a>
+            </li>
+            <li>
+              <a href="Customer_Quote.jsp?project_id=<%=pid%>">Customer Purchase Order</a>
+            </li>
+          </ul>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -652,11 +660,11 @@
 												</tr>
 												<tr>
 													<th class="text-center" rowspan="2">S.No</th>
-													<th class="text-center" rowspan="2">Discription</th>
+													<th class="text-center" rowspan="2">Description</th>
 													<th class="text-center" rowspan="2">Make/Model</th>
 													<th class="text-center" rowspan="2">Qty</th>
 													<th class="text-center" rowspan="2">Units</th>
-													<th class="text-center" rowspan="">Unitprice</th>
+													<th class="text-center" rowspan="">Unit Price</th>
 													<th class="text-center" colspan="">Total Price</th>
 													<th class="text-center" rowspan="">Unit Price</th>
 													<th class="text-center" rowspan="">Total Price</th>
