@@ -13,13 +13,16 @@
 		
 		
 		int pid = Integer.parseInt(request.getParameter("projectid"));
-		int sid = Integer.parseInt(request.getParameter("supplier_name"));
-		
+		int sid = Integer.parseInt(request.getParameter("sid"));
+		int po = Integer.parseInt(request.getParameter("po"));
+		System.out.println(po);
 		System.out.println(pid);
+		System.out.println(po);
+		
 		ArrayList al;
 		
 		al = new ArrayList();
-		al = sdb.getSupplierQuote(sid);
+		al = sdb.getSupplierQuote(po);
 		
 		
 		ArrayList al1;
@@ -31,7 +34,7 @@
 		ArrayList al2;
 		
 		al2 = new ArrayList();
-		al2 = sdb.getTotals(sid);
+		al2 = sdb.getTotals(po);
 		
 		
 
@@ -79,6 +82,8 @@
 			        	var insunitprice = $('#insunitprice').val();
 			        	var instotalprice = $('#instotalprice').val();
 			        	var sid = $('#supplierid').val();
+			        	var poid = $('#poid').val();
+			        	
 			        	
 			        	
 			        	if (sno == '') 
@@ -111,6 +116,7 @@
 			                	insunitprice :$('#insunitprice').val(),
 			                	instotalprice :$('#instotalprice').val(),
 			                	sid :$('#supplierid').val(),
+			                	po :$('#poid').val(),
 			                	
 			                },
 			                
@@ -643,6 +649,7 @@
          <input type="hidden" name="updateflag" id="updateflag" value="NO">
          <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
          <input type="hidden" name="supplierid" id="supplierid" value="<%=sid%>">
+         <input type="hidden" name="poid" id="poid" value="<%=po%>">
          <legend>Final Quote PO</legend>
 								
 											<div class="form-group">

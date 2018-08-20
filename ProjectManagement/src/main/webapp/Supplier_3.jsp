@@ -1,7 +1,9 @@
 <%
 
-	int pid = Integer.parseInt(request.getParameter("project_name"));
-	int sid = Integer.parseInt(request.getParameter("supplierid"));
+	int pid = Integer.parseInt(request.getParameter("projectid"));
+	int sid = Integer.parseInt(request.getParameter("supplier_name"));
+	
+	System.out.println(sid);
 
 %>
 
@@ -432,49 +434,22 @@
           <i></i><b>View Suppliers List</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_2.jsp" method="post">
+         <form action="SavePOservlet" method="post">
          
          <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
          <input type="hidden" name="updateflag" id="updateflag" value="NO">
          <input type="hidden" name="quoteid" id="quoteid" value="1">
+         <input type="hidden" name="sid" id="sid" value="<%=sid%>">
          
 								<div class="form-group">
 										<legend>Select Suppliers Name :</legend><br>
 										
-										<select name = "supplier_name" class="form-control">
-										<option value="">Select</option>
-										<%
-										InitCon it = new InitCon();
-										Connection con = it.InitConnection();
-					      				
-					      				PreparedStatement ps;
-					      				ResultSet rs;
-					      		        
-					      				  try
-					      			        { 
-					      					  ps = con.prepareStatement("SELECT * FROM arken.suppliers;");
-					      					  
-					      					  rs = ps.executeQuery();
-					      					 %>
-					      					
-					      					<%
-					      					  while (rs.next())
-					      					  {%>
-												  <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
-											<%	  
-												
-					      					  }
-					      					  
-					      					  con.close();
-					      					  
-					      					}
-					      			        catch (SQLException e)
-					      			        {
-					      			        	e.printStackTrace();
-					      			        	
-					      			        }
-										
-										%>
+										<select name = "po" class="form-control">
+										<option value="1">PO 1</option>
+										<option value="2">PO 2</option>
+										<option value="3">PO 3</option>
+										<option value="4">PO 4</option>
+										<option value="5">PO 5</option>
 										</select>
 										
 								</div>

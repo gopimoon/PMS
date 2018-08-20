@@ -424,7 +424,7 @@
           <i></i><b>View Project List</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
+         <form action="View_Suppliers_1.jsp" method="post">
          
 								<div class="form-group">
 										<legend>Select Project Name :</legend><br>

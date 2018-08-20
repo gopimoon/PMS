@@ -1,3 +1,11 @@
+<%
+
+	int pid = Integer.parseInt(request.getParameter("projectid"));
+	int sid = Integer.parseInt(request.getParameter("supplier_name"));
+
+%>
+
+
 <!DOCTYPE html>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -26,7 +34,6 @@
    <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
    
    
- 
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -421,15 +428,18 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i><b>View Project List</b></div>
+          <i></i><b>View Suppliers List</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
+         <form action="View_Suppliers_3.jsp" method="post">
+         
+         <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
+         <input type="hidden" name="supplierid" id="supplierid" value="<%=sid%>">
          
 								<div class="form-group">
-										<legend>Select Project Name :</legend><br>
+										<legend>Select Suppliers Name :</legend><br>
 										
-										<select name = "project_name" class="form-control">
+										<select name = "po_id" id="po_id" class="form-control">
 										<option value="">Select</option>
 										<%
 										InitCon it = new InitCon();
@@ -440,15 +450,15 @@
 					      		        
 					      				  try
 					      			        { 
-					      					  ps = con.prepareStatement("SELECT * FROM arken.project_master;");
+					      					  ps = con.prepareStatement("select po_id from arken.suppliers_master where project_id="+pid+" and supplier_id="+sid+";;");
 					      					  
-					      					  rs = ps.executeQuery();
+					      					  rs = ps.executeQuery();	
 					      					 %>
 					      					
 					      					<%
 					      					  while (rs.next())
 					      					  {%>
-												  <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
+												  <option value="<%=rs.getInt(1)%>"><%=rs.getInt(1)%></option>
 											<%	  
 												
 					      					  }

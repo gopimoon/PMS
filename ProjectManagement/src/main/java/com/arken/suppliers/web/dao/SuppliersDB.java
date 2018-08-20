@@ -9,42 +9,93 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import com.arken.connection.InitCon;
+import com.arken.finalquote.web.model.FinalQuoteBean;
 import com.arken.suppliers.web.model.SuppliersBean;
 
 public class SuppliersDB 
 {
 
+	public static int SavePO(int pid,int sid) throws SQLException
+	{
+		
+		int status = 0;
+		
+		InitCon it = new InitCon();
+		Connection con = it.InitConnection();
+		PreparedStatement ps,ps1;
+		
+		try
+		{
+			con.setAutoCommit(false);
+			
+			ps = con.prepareStatement("insert into suppliers_master(project_id,supplier_id) values(?,?)");
+			ps.setInt(1, pid);
+			ps.setInt(2, sid);
+			ps.executeUpdate();
+			con.commit();
+			
+			status = 1;
+			con.close();
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return status;
+	}	
+	
+	
+	
+	public static int SelectMaxPOid(int pid,int sid) throws SQLException
+	{
+		
+		int po = 0;
+		
+		InitCon it = new InitCon();
+		Connection con = it.InitConnection();
+		PreparedStatement ps,ps1;
+		
+		try
+		{
+			con.setAutoCommit(false);
+			
+			ps = con.prepareStatement("select max(po_id) from arken.suppliers_master where project_id=? and supplier_id=?");
+			ps.setInt(1, pid);
+			ps.setInt(2, sid);
+			
+			
+			ResultSet rs=ps.executeQuery();
+			while(rs.next())
+			{
+				po = rs.getInt(1);
+			}
+			
+			con.close();
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return po;
+	}	
+	
 	public static int SaveSupplierQuote(SuppliersBean sb) throws SQLException
 	{
 		int status=0;
 		
 		InitCon it = new InitCon();
 		Connection con = it.InitConnection();
-		PreparedStatement ps,ps1,ps3;
-		int pid = 0;
+		PreparedStatement ps;
 		try
 		{
 			con.setAutoCommit(false);
 			
-			ps1 = con.prepareStatement("insert into suppliers_master(project_id,supplier_id) values(?,?)");
-			ps1.setInt(1, sb.getProjectid());
-			ps1.setInt(2, sb.getSupplierid());
-			status = ps1.executeUpdate();
-			con.commit();
-			
-			
-			ps3=con.prepareStatement("SELECT MAX(po_id)FROM suppliers_master");
-			ResultSet rs=ps3.executeQuery();
-			while(rs.next())
-			{
-				pid=rs.getInt(1);
-				//b.setPatientid(pid);
-			}	
-			
 			ps=con.prepareStatement("INSERT INTO `arken`.`supplier_quote`(`sup_id`,`s_no`,`description`,`model`,`qty`,`units`,`unitprice`,`totalprice`,"
 					+ "`insunitprice`,`instotalprice`) VALUES (?,?,?,?,?,?,?,?,?,?)");
 			
-			ps.setInt(1, pid);
+			ps.setInt(1, sb.getPoid());
 			ps.setInt(2, sb.getSno());
 			ps.setString(3, sb.getDescription());
 			ps.setString(4, sb.getModel());
@@ -70,6 +121,53 @@ public class SuppliersDB
 		}
 		return status;
 	}	
+	
+	
+	
+	//Function for update the Final Quote value
+	
+	
+	
+		public static int UpdateSupplierPO(SuppliersBean sb) throws SQLException
+		{
+			int status=0;
+			
+			InitCon it = new InitCon();
+			Connection con = it.InitConnection();
+			PreparedStatement ps;
+			
+			try
+			{
+				con.setAutoCommit(false);
+				ps=con.prepareStatement("UPDATE `arken`.`supplier_quote` SET `description` = ?,`model` = ?,`qty` = ?,`units` = ?,"
+						+ "`unitprice` = ?,`totalprice` = ?,`insunitprice` = ?,`instotalprice` = ? WHERE `sup_id` = ? and `s_no` = ?");
+				
+				
+				
+				ps.setString(1, sb.getDescription());
+				ps.setString(2, sb.getModel());
+				ps.setString(3, sb.getQty());
+				ps.setString(4, sb.getUnits());
+				ps.setString(5, sb.getUnitprice());
+				ps.setString(6, sb.getTotalprice());
+				ps.setString(7, sb.getInsunitprice());
+				ps.setString(8, sb.getInstotalprice());
+				ps.setInt(9, sb.getPoid());
+				ps.setInt(10, sb.getSno());
+				
+				ps.executeUpdate();
+				con.commit();
+				
+				status=1;
+				con.close();
+			}
+			catch (SQLException e) 
+			{
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return status;
+		}	
 	
 	
 	// Funciton for retriving data from Items table for display
@@ -114,7 +212,7 @@ public class SuppliersDB
 				
 	// Funciton for retriving data from Total,Subtotal,GST,Discount Test table for display
 	
-	public static ArrayList getTotals(int sid) throws SQLException
+	public static ArrayList getTotals(int po) throws SQLException
 	{
 		
 		InitCon it = new InitCon();
@@ -132,7 +230,7 @@ public class SuppliersDB
 			  		+ "round(sum(instotalprice)*18/100) as gst1, "
 			  		+ "(sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100)) as total, "
 			  		+ "round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100) as discount, "
-			  		+ "((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))-round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100)) as final from supplier_quote where sup_id="+sid+" ");
+			  		+ "((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))-round((sum(totalprice) + sum(instotalprice) + round(sum(totalprice)*18/100) + round(sum(instotalprice)*18/100))*5/100)) as final from supplier_quote where sup_id="+po+" ");
 			 
 			  rs1 = ps.executeQuery();
 			 
@@ -166,7 +264,7 @@ public class SuppliersDB
 	
 	// Funciton for retriving data from suppliers table for display
 	
-			public static ArrayList getSupplierQuote(int sid) throws SQLException
+			public static ArrayList getSupplierQuote(int po) throws SQLException
 			{
 				
 				InitCon it = new InitCon();
@@ -179,7 +277,7 @@ public class SuppliersDB
 				  try
 			        {
 					  ps = con.prepareStatement("SELECT * FROM arken.supplier_quote where sup_id = ?");
-					  ps.setInt(1, sid);
+					  ps.setInt(1, po);
 					 
 					  rs1 = ps.executeQuery();
 					 

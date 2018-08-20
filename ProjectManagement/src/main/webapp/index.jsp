@@ -52,11 +52,19 @@
           </a>
         </li>	
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="Suppliers.jsp">
-            <i class="fa fa-fw fa-table"></i>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Suppliers</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="Suppliers.jsp">Create Suppliers PO</a>
+            </li>
+            <li>
+              <a href="View_Suppliers.jsp">View Suppiers PO</a>
+            </li>
+          </ul>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">

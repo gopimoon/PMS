@@ -5,10 +5,18 @@ public class SuppliersBean
 
 private String updateflag,description,model,qty,units,unitprice,totalprice,insunitprice,instotalprice;
 	
-	private int projectid,quoteid,sno,supplierid;
+	private int projectid,quoteid,sno,supplierid,poid;
 	
 	public int getSupplierid() {
 		return supplierid;
+	}
+
+	public int getPoid() {
+		return poid;
+	}
+
+	public void setPoid(int poid) {
+		this.poid = poid;
 	}
 
 	public void setSupplierid(int supplierid) {

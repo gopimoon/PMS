@@ -1,9 +1,45 @@
-<!DOCTYPE html>
+<%@page import="com.arken.suppliers.web.dao.SuppliersDB"%>
+<%@page import="com.arken.connection.InitCon"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.SQLException"%>
+<%@page import="javax.naming.InitialContext"%>
+<%@page import="javax.naming.Context"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="javax.sql.DataSource"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="com.arken.connection.InitCon"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
+<%
+		SuppliersDB sdb = new SuppliersDB();
+		
+		
+		int pid = Integer.parseInt(request.getParameter("projectid"));
+		int sid = Integer.parseInt(request.getParameter("supplierid"));
+		int po = Integer.parseInt(request.getParameter("po_id"));
+		
+		System.out.println(pid);
+		ArrayList al;
+		
+		al = new ArrayList();
+		al = sdb.getSupplierQuote(po);
+		
+		
+		ArrayList al1;
+		
+		al1 = new ArrayList();
+		al1 = sdb.getItems();
+		
+		
+		ArrayList al2;
+		
+		al2 = new ArrayList();
+		al2 = sdb.getTotals(po);
+		
+		
+
+%>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,7 +61,214 @@
 
    <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
    
+   <script>
    
+// Function for add row and save 
+   
+	$(document).ready(function() 
+	{
+		            $('.sub').click(function ()
+			        {
+		            	alert(id)
+		            	var cid = this.id;
+		            	alert(cid)
+		            	var updateflag = $('#updateflag').val();
+	                	var projectid = $('#projectid').val();
+	                	var quoteid = $('#quoteid').val();
+			        	var sno = $('#sno').val();
+			        	alert(sno)
+			        	var description = $('#description').val();
+			        	alert(description)
+			        	var model = $('#model').val();
+			        	var qty = $('#qty').val();
+			        	var units = $('#units').val();
+			        	var unitprice = $('#unitprice').val();
+			        	var totalprice = $('#totalprice').val();
+			        	var insunitprice = $('#insunitprice').val();
+			        	var instotalprice = $('#instotalprice').val();
+			        	
+			        	
+			        	if (sno == '') 
+			        	{
+			        		
+			                alert('S.No-field is empty.');
+			               
+			                return false;
+			            }
+			        	
+			        	
+			            $.ajax({
+			            	type: "post",
+			                url: "SuppliersServlet", //this is my servlet
+			                
+			                data: 
+			                {
+			                	TableIdentifier :"updatesuppliertable",
+			                	updateflag: $('#updateflag').val(),
+			                	projectid: $('#projectid').val(),
+			                	quoteid: $('#quoteid').val(),
+			                	sno: $('#sno').val(),
+			                	description: $('#description').val(),
+			                	model :$('#model').val(),
+			                	qty :$('#qty').val(),
+			                	units :$('#units').val(),
+			                	unitprice :$('#unitprice').val(),
+			                	totalprice :$('#totalprice').val(),
+			                	insunitprice :$('#insunitprice').val(),
+			                	instotalprice :$('#instotalprice').val(),
+			                	
+			                },
+			                
+			                success: function(msg)
+			                {      
+			                	window.location.reload(true);
+			                        $('#output').append(msg);
+			                }
+			                
+			            });
+			          
+			          });
+	
+		}); 
+		
+		
+		
+		
+	 function writeabdata(sno,qty) {
+		
+		alert("test")
+		alert(sno)
+	    alert ("table = "+sno+" id = "+qty); //+" field = \'"+field+"\' value = "+value
+
+	    var dataObj = {
+	        'table': sno,
+	        'id': qty
+	    };
+	    dataObj[field] = mapstring;
+
+	    $.ajax({
+	        type: 'GET',
+	        url: 'writeabdata.php',
+	        data: dataObj,
+	        success: function (data) {
+	            alert ("data Saved "+ data);
+	        }
+	    });
+	} 
+		
+	
+	
+		
+		<%-- 
+		            function insert(id)
+		      	  	{      
+		      		
+		            	
+		      		 if((id=="investigationtable"))
+		      		   { 
+		      			 	
+		      				
+		      			    var filas = document.getElementById("investigationtable").rows.length;
+		      			 
+		      			    var x = document.getElementById(id).insertRow(filas);
+		      			    if(!document.getElementById("sno")=='')
+		      				{
+		      					
+		      					alert("Please enter date field and click to save");
+		      					return false;
+		      				}	
+		      			    
+		      			    var a = x.insertCell(0);
+		      			    var b = x.insertCell(1);                                          
+		      			  	var c= x.insertCell(2);
+		      			 	var d= x.insertCell(3);
+		      			  	var e= x.insertCell(4);
+		      			  	var f= x.insertCell(5);
+		      			  	var g= x.insertCell(6);
+		      			  	var h= x.insertCell(7);
+		      			  	var i= x.insertCell(8);
+		      			  	
+		      			    a.innerHTML = '<input type="text" name="sno" id="sno" maxlength="25">';
+		      			  	<%
+				      			  
+		      			 			
+		      			  			Context initContext  = new InitialContext();
+				      				Context envContext  = (Context)initContext.lookup("java:/comp/env");
+				      				DataSource datasource = (DataSource)envContext.lookup("jdbc/ark");
+				      				
+				      				Connection con=datasource.getConnection();
+				      				
+				      				PreparedStatement ps;
+				      				ResultSet rs1;
+				      		        ArrayList al2 = new ArrayList();
+				      		        
+				      				  try
+				      			        { 
+				      					  ps = con.prepareStatement("SELECT * FROM arken.items;");
+				      					  
+				      					  rs1 = ps.executeQuery();
+				      					 %>
+				      					
+				      					<%
+				      					  while (rs1.next())
+				      					  {
+				      						al2.add(rs1.getString(2)) ;
+				      						  
+				      					  }
+				      					  %>
+				      					
+				      						
+				      					<%
+				      					System.out.println(al2);
+				      					  con.close();
+				      					
+				      					}
+				      			        catch (SQLException e)
+				      			        {
+				      			        	e.printStackTrace();
+				      			        	
+				      			        }
+		      			  	
+		      			  		%>			
+		      			  					
+		      			  					/* b.innerHTML ='' ; */
+						      			 	c.innerHTML = '<input type="text" name="model" id="model" class="form-table" maxlength="25" >';
+						      			 	d.innerHTML = '<input type="text" name="qty" id="qty" class="form-table" maxlength="25" >';
+						      			 	e.innerHTML = '<input type="text" name="units" id="units" class="form-table" maxlength="25" >';
+						      			 	f.innerHTML = '<input type="text" name="unitprice" id="unitprice" class="form-table" maxlength="25" >';
+						      			 	g.innerHTML = '<input type="text" name="totalprice" id="totalprice" class="form-table" maxlength="25" >';
+						      			 	h.innerHTML = '<input type="text" name="insunitprice" id="insunitprice" class="form-table" maxlength="25" >';
+						      			 	i.innerHTML = '<input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" >';
+						      			
+						            
+			      		   }
+			      	  	}
+		             --%>
+		            
+		            
+		            
+   </script>
+   
+   <script>
+   
+   
+   function multiply(val,val1,val2,val3,val4)
+   {
+	  
+	   var x = document.getElementById(val).value;
+	   var y = document.getElementById(val1).value;
+	   z = x * y;
+	   document.getElementById(val2).value = z;
+	   
+	   
+	   var x1 = document.getElementById(val).value;
+	   var y1 = document.getElementById(val3).value;
+	   z1 = x1 * y1;
+	   document.getElementById(val4).value = z1;
+   }   
+   
+   
+   </script>
  
 </head>
 
@@ -46,11 +289,19 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Create Projects</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Quotations</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="Final_Quote1.jsp?project_id=<%=pid%>">Final Quotation</a>
+            </li>
+            <li>
+              <a href="Customer_Quote1.jsp?project_id=<%=pid%>">Customer Purchase Order</a>
+            </li>
+          </ul>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -421,57 +672,220 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i><b>View Project List</b></div>
+          <i></i>Final Quote</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
+         <%-- <form action="FinalQuote" method="post">
          
-								<div class="form-group">
-										<legend>Select Project Name :</legend><br>
-										
-										<select name = "project_name" class="form-control">
-										<option value="">Select</option>
-										<%
-										InitCon it = new InitCon();
-										Connection con = it.InitConnection();
-					      				
-					      				PreparedStatement ps;
-					      				ResultSet rs;
-					      		        
-					      				  try
-					      			        { 
-					      					  ps = con.prepareStatement("SELECT * FROM arken.project_master;");
-					      					  
-					      					  rs = ps.executeQuery();
-					      					 %>
-					      					
-					      					<%
-					      					  while (rs.next())
-					      					  {%>
-												  <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
-											<%	  
+         <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
+         <input type="hidden" name="updateflag" id="updateflag" value="YES">
+         <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
+         <input type="hidden" name="TableIdentifier" id="TableIdentifier" value="updatequotetable"> --%>
+         <legend>Final Quote PO</legend>
+								
+											<div class="form-group">
+										   <label class="col-md-2 control-label" >Purchase Order</label>  
+										  	
+											    <table  class="table-bordered table-hover" id="investigationtable">
+												<tr>
+												<th class="text-center" colspan="5">Mapleton Apartment</th>
+												<th class="text-center" colspan="2">Supply of Meterials</th>
+												<th class="text-center" colspan="2">Installation of Materials</th>
+												</tr>
+												<tr>
+													<th class="text-center" rowspan="2">S.No</th>
+													<th class="text-center" rowspan="2">Description</th>
+													<th class="text-center" rowspan="2">Make/Model</th>
+													<th class="text-center" rowspan="2">Qty</th>
+													<th class="text-center" rowspan="2">Units</th>
+													<th class="text-center" rowspan="">Unit Price</th>
+													<th class="text-center" colspan="">Total Price</th>
+													<th class="text-center" rowspan="">Unit Price</th>
+													<th class="text-center" rowspan="">Total Price</th>
+												</tr>
+												<tr>
+												</tr>
+									
+									 
+									 <%
+						                int count = 0;
+						                String color = "#F9EBB3";
+						             
+						                if (!al.isEmpty()) 
+						               {
+						                  
+						                    Iterator itr = al.iterator();
+						                    
+						                    while (itr.hasNext()) 
+						                    {
+						 
+						                        if ((count % 2) == 0) 
+						                        {
+						                            color = "#eeffee";
+						                        }
+						                        count++;
+						                        ArrayList pList = (ArrayList) itr.next();
+						           		 %>
+						           		<form action="SuppliersServlet" method="post">
+         
+									         <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
+									         <input type="hidden" name="updateflag" id="updateflag" value="YES">
+									         <input type="hidden" name="po" id="po" value="<%=po%>">
+									         <input type="hidden" name="supplierid" id="supplierid" value="<%=sid%>">
+									         <input type="hidden" name="TableIdentifier" id="TableIdentifier" value="updatesuppliertable">
+								            	<tr style="background-color:<%=color%>;">
+								            
+								                <td class="text-center"><input typ="text" name="sno" id="sno" value="<%=pList.get(0)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="description" id="description<%=pList.get(0)%>"  value="<%=pList.get(1)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="model" id="model<%=pList.get(0)%>" value="<%=pList.get(2)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="qty" id="qty<%=pList.get(0)%>" value="<%=pList.get(3)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
+								                <td class="text-center"><input type="text" name="units" id="units<%=pList.get(0)%>" value="<%=pList.get(4)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="unitprice" id="unitprice<%=pList.get(0)%>" value="<%=pList.get(5)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
+								                <td class="text-center"><input type="text" name="totalprice" id="totalprice<%=pList.get(0)%>" value="<%=pList.get(6)%>" readonly></td>
+								                <td class="text-center"><input type="text" name="insunitprice" id="insunitprice<%=pList.get(0)%>" value="<%=pList.get(7)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
+								                <td class="text-center"><input type="text" name="instotalprice" id="instotalprice<%=pList.get(0)%>" value="<%=pList.get(8)%>" readonly></td>
+								              <%--  <td><a href="" data-id="<%=pList.get(0)%>" class="clik_for_fetch">Update</a></td>
+								               <td><input type="button"  onClick="writeabdata(this.sno,this.qty);">check</a></td> --%>
+									  			<td><input type="submit" value="Save Row"></td>
+									  			</tr>
+									  	</form>
+						            	<%
+						                   }
+						                }
+						                
+									  %>
+									  
+									  		
+									  			
+									  			<%
+						                int count2 = 0;
+						                String color2 = "#F9EBB3";
+						             
+						                if (!al2.isEmpty()) 
+						               {
+						                  
+						                    Iterator itr2 = al2.iterator();
+						                    
+						                    while (itr2.hasNext()) 
+						                    {
+						 
+						                        if ((count2 % 2) == 0) 
+						                        {
+						                            color2 = "#eeffee";
+						                        }
+						                        count2++;
+						                        ArrayList pList2 = (ArrayList) itr2.next();
+						           		 %>
+								            
+								            <tr>
+									  			<td colspan="6"><b>Sub Total</b></td>
+								                <td class="text-center"><b><input value="<%=pList2.get(0)%>" readonly></b></td>
+												<td class="text-center"></td>
+									    		<td class="text-center"><b><input value="<%=pList2.get(1)%>" readonly></b></td>
+								              </tr>
+											<%-- <tr>
+													
+											<td colspan="6"><b>GST on 18 %</b></td>
+											<td class="text-center"><b><%=pList2.get(2)%></b></td>
+											<td class="text-center"></td>
+										    <td class="text-center"><b><%=pList2.get(3)%></b></td>
+									    
+												</tr> --%>
 												
-					      					  }
-					      					  
-					      					  con.close();
-					      					  
-					      					}
-					      			        catch (SQLException e)
-					      			        {
-					      			        	e.printStackTrace();
-					      			        	
-					      			        }
+												<%-- <tr>
+													
+										<td colspan="8"><b>Total</b></td>
+										<td class="text-center"><b><%=pList2.get(4)%></b></td>
 										
-										%>
-										</select>
+									    		
+										</tr> --%>
+										<%-- <tr>
+													
+										<td colspan="8"><b>Customer special Discount 5 %</b></td>
+										<td class="text-center"><b><%=pList2.get(5)%></b></td>
 										
+												</tr>
+												
+												
+												<tr>
+													
+										<td colspan="8"><b>Grand Total After 5 % Discount</b></td>
+										<td class="text-center"><b><%=pList2.get(6)%></b></td>
+										
+												</tr> --%>
+								            
+						            	<%
+						                   }
+						                }
+						                
+									  %>
+									  
+									  <%-- <tr>
+										<td><input type="text" name="sno" id="sno" maxlength="25"></td>
+										<td>
+												<select id="description" name="description">
+											 	 <option>Select</option>
+											  <%
+											 
+							      			  
+					      			 			
+											  	InitCon it = new InitCon();
+												Connection con = it.InitConnection();
+							      				
+							      				PreparedStatement ps1;
+							      				ResultSet rs2;
+							      		        
+							      				  try
+							      			        { 
+							      					  ps1 = con.prepareStatement("SELECT * FROM arken.items;");
+							      					  
+							      					  rs2 = ps1.executeQuery();
+							      					 %>
+							      					
+							      					<%
+							      					  while (rs2.next())
+							      					  {%>
+														  <option value="<%=rs2.getString(2)%>"><%=rs2.getString(2)%></option>
+													<%	  
+														
+							      					  }
+							      					  
+							      					  con.close();
+							      					  
+							      					}
+							      			        catch (SQLException e)
+							      			        {
+							      			        	e.printStackTrace();
+							      			        	
+							      			        }
+							      				
+					      			  		%>	
+											
+											 </select>
+										
+										
+										
+										</td>
+										<td><input type="text" name="model" id="model" class="form-table" maxlength="25" ></td>
+										<td><input type="text" name="qty" id="qty" onChange="multiply()" class="form-table" maxlength="25" ></td>
+										<td><input type="text" name="units" id="units" class="form-table" maxlength="25" ></td>
+									    <td><input type="text" name="unitprice" id="unitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
+									    <td><input type="text" name="totalprice" id="totalprice" class="form-table" maxlength="25" ></td>
+										<td><input type="text" name="insunitprice" id="insunitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
+								 		<td><input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" ></td>
+							 			
+									</tr> --%>
+									
+									  </table>	
+									 <!-- 
+									  <input type="button"  class="button" id="investigationtable" onclick="insert('investigationtable')" value="Insert Row">
+									  <input type="button" class="button" id="investtable" value="Save Row" /> -->
+									  
+									  
 								</div>
-								<input type="submit" class="button" value="View">
-								</form>
+								<!-- </form> -->
 								</div>
-        
          </div>
-         
         </div>
        <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
       </div>

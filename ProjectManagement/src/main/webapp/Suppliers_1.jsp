@@ -32,7 +32,49 @@
 
    <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
    
+   <script>
    
+	// Function for save suppliers master table 
+   
+	$(document).ready(function() 
+	{
+		            $('#suppliersave').click(function ()
+			        {
+		            	
+			        	var pid = $('#projectid').val();
+			        	var sid = $('#supplier_name').val();
+			        	
+			        	
+			        	
+			            $.ajax({
+			            
+			            	type: "post",
+			                url: "SavePOservlet", //this is my servlet
+			                
+			                data: 
+			                {
+			                	TableIdentifier :"suppliermaster",
+			                	pid :$('#projectid').val(),
+			                	sid :$('#supplier_name').val(),
+			                	
+			                	
+			                },
+			                
+			                success: function(msg)
+			                {      
+			                	window.location.reload(true);
+			                        $('#output').append(msg);
+			                }
+			                
+			            });
+			          
+			          });
+	
+		}); 
+   
+   
+   
+   </script>
  
 </head>
 
@@ -431,7 +473,7 @@
           <i></i><b>View Suppliers List</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_2.jsp" method="post">
+         <form action="Suppliers_4.jsp" method="post">
          
          <input type="hidden" name="projectid" id="projectid" value="<%=pid%>">
          <input type="hidden" name="updateflag" id="updateflag" value="NO">
@@ -440,7 +482,7 @@
 								<div class="form-group">
 										<legend>Select Suppliers Name :</legend><br>
 										
-										<select name = "supplier_name" class="form-control">
+										<select name = "supplier_name" id="supplier_name" class="form-control">
 										<option value="">Select</option>
 										<%
 										InitCon it = new InitCon();
@@ -477,7 +519,7 @@
 										</select>
 										
 								</div>
-								<input type="submit" class="button" value="View">
+								<input type="submit" class="button" id="suppliersave" value="View">
 								</form>
 								</div>
         

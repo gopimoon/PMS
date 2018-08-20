@@ -3,48 +3,5 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-	<!-- <servlet>
-		<servlet-name>SuppliersServlet</servlet-name>
-		<display-name>SuppliersServlet</display-name>
-		<description></description>
-		<servlet-class>com.arken.suppliers.web.SuppliersServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>SuppliersServlet</servlet-name>
-		<url-pattern>/SuppliersServlet</url-pattern>
-	</servlet-mapping> -->
-  <!-- <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-  	<servlet-name>SaveProject</servlet-name>
-  	<display-name>SaveProject</display-name>
-  	<description></description>
-  	<servlet-class>com.arken.projectname.web.SaveProject</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>SaveProject</servlet-name>
-  	<url-pattern>/SaveProject</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>FinalQuote</servlet-name>
-  	<display-name>FinalQuote</display-name>
-  	<description></description>
-  	<servlet-class>com.arken.finalquote.web.FinalQuote</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>FinalQuote</servlet-name>
-  	<url-pattern>/FinalQuote</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>CustomerQuote</servlet-name>
-  	<display-name>CustomerQuote</display-name>
-  	<description></description>
-  	<servlet-class>com.arken.customerquote.web.CustomerQuote</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>CustomerQuote</servlet-name>
-  	<url-pattern>/CustomerQuote</url-pattern>
-  </servlet-mapping>
-   -->
+	
 </web-app>
