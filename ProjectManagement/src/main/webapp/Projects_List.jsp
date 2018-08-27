@@ -1,16 +1,10 @@
+
 <%
 
-
-int cid = Integer.parseInt(request.getParameter("cus_id"));
+	int cid = Integer.parseInt(request.getParameter("cus_id"));
 
 %>
-
 <!DOCTYPE html>
-<%@page import="com.arken.connection.InitCon"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
 <html lang="en">
 
 <head>
@@ -20,7 +14,6 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Arken PMS</title>
-  
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -29,10 +22,7 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-
-   <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
-   
-   
+		
  
 </head>
 
@@ -473,57 +463,24 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i><b>View Project List</b></div>
+          <i></i>Projects</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
-         
-								<div class="form-group">
-										<legend>Select Project Name :</legend><br>
-										
-										<select name = "project_name" class="form-control">
-										<option value="">Select</option>
-										<%
-										InitCon it = new InitCon();
-										Connection con = it.InitConnection();
-					      				
-					      				PreparedStatement ps;
-					      				ResultSet rs;
-					      		        
-					      				  try
-					      			        { 
-					      					  ps = con.prepareStatement("SELECT project_id,project_name FROM arken.project_master where cus_id=?;");
-					      					  ps.setInt(1, cid);
-					      					  rs = ps.executeQuery();
-					      					 %>
-					      					
-					      					<%
-					      					  while (rs.next())
-					      					  {%>
-												  <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
-											<%	  
-												
-					      					  }
-					      					  
-					      					  con.close();
-					      					  
-					      					}
-					      			        catch (SQLException e)
-					      			        {
-					      			        	e.printStackTrace();
-					      			        	
-					      			        }
-										
-										%>
-										</select>
-										
-								</div>
-								<input type="submit" class="button" value="View">
-								</form>
-								</div>
+         <form action="SaveProject" method="post">
+         <input type="hidden" name="cid" id="cid" value="<%=cid%>">
         
+			<div class="form-group">
+				<label class="col-md-2 control-label" ><b>Project Name</b></label>  
+							   
+					  <input type="text"  name="project_name" id="project_name" >
+					  <input type="submit"  value="Save" />
+									  
+									  
+			</div>
+		</form>
+		
+	</div>
          </div>
-         
         </div>
        <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
       </div>

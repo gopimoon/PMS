@@ -73,22 +73,22 @@ public class CustomerQuoteDB
 			try
 			{
 				con.setAutoCommit(false);
-				ps=con.prepareStatement("UPDATE `arken`.`customer_quote` SET `description` = ?,`model` = ?,`qty` = ?,`units` = ?,"
+				ps=con.prepareStatement("UPDATE `arken`.`customer_quote` SET `qty` = ?,"
 						+ "`unitprice` = ?,`totalprice` = ?,`insunitprice` = ?,`instotalprice` = ? WHERE project_id = ? and s_no = ? and `quote_id` = ?");
 				
 				
 				
-				ps.setString(1, cqb.getDescription());
-				ps.setString(2, cqb.getModel());
-				ps.setString(3, cqb.getQty());
-				ps.setString(4, cqb.getUnits());
-				ps.setString(5, cqb.getUnitprice());
-				ps.setString(6, cqb.getTotalprice());
-				ps.setString(7, cqb.getInsunitprice());
-				ps.setString(8, cqb.getInstotalprice());
-				ps.setInt(9, cqb.getProjectid());
-				ps.setInt(10, cqb.getSno());
-				ps.setInt(11, cqb.getQuoteid());
+				//ps.setString(1, cqb.getDescription());
+				//ps.setString(2, cqb.getModel());
+				ps.setString(1, cqb.getQty());
+				//ps.setString(4, cqb.getUnits());
+				ps.setString(2, cqb.getUnitprice());
+				ps.setString(3, cqb.getTotalprice());
+				ps.setString(4, cqb.getInsunitprice());
+				ps.setString(5, cqb.getInstotalprice());
+				ps.setInt(6, cqb.getProjectid());
+				ps.setInt(7, cqb.getSno());
+				ps.setInt(8, cqb.getQuoteid());
 				
 				ps.executeUpdate();
 				con.commit();
@@ -121,7 +121,7 @@ public class CustomerQuoteDB
 	        
 			  try
 		        {
-				  ps = con.prepareStatement("SELECT * FROM arken.customer_quote where project_id = ?");
+				  ps = con.prepareStatement("SELECT s_no,item_name,model,qty,units,unitprice,totalprice,insunitprice,instotalprice FROM arken.customer_quote,arken.items where customer_quote.description=items.itemid and project_id=?;");
 				  ps.setInt(1, pid);
 				 
 				  rs1 = ps.executeQuery();
@@ -130,6 +130,8 @@ public class CustomerQuoteDB
 				  {
 					  alCustomerQuote = new ArrayList();
 					  
+					  alCustomerQuote.add(rs1.getString(1));
+					  alCustomerQuote.add(rs1.getString(2));
 					  alCustomerQuote.add(rs1.getString(3));
 					  alCustomerQuote.add(rs1.getString(4));
 					  alCustomerQuote.add(rs1.getString(5));
@@ -137,8 +139,6 @@ public class CustomerQuoteDB
 					  alCustomerQuote.add(rs1.getString(7));
 					  alCustomerQuote.add(rs1.getString(8));
 					  alCustomerQuote.add(rs1.getString(9));
-					  alCustomerQuote.add(rs1.getString(10));
-					  alCustomerQuote.add(rs1.getString(11));
 					  
 					  Customer_Quote.add(alCustomerQuote);
 				  }

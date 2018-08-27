@@ -1,3 +1,9 @@
+<%
+
+	int cid = Integer.parseInt(request.getParameter("cus_id"));
+
+%>
+
 <!DOCTYPE html>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -46,17 +52,62 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Create Projects</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Add Categories</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents3">
+            <li>
+              <a href="Add_Customers.jsp">Add Customers</a>
+            </li>	
+            <li>
+              <a href="Add_Suppliers.jsp">Add Suppliers</a>
+            </li>
+            <li>
+              <a href="Add_Items.jsp">Add Items</a>
+            </li>
+            <li>
+              <a href="Add_Models.jsp">Add Models</a>
+            </li>
+          </ul>
+        </li>
+       
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Projects</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="Customer_Details.jsp">Create Projects</a>
+            </li>
+            <li>
+              <a href="View_Customer.jsp">Edit Projects</a>
+            </li>
+          </ul>
+        </li>
+       	
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSuppliersComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Suppliers</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseSuppliersComponents">
+            <li>
+              <a href="Suppliers_CustomerDetails.jsp">Create Suppliers PO</a>
+            </li>
+            <li>
+              <a href="View_CustomerDetails.jsp">Edit Suppiers PO</a>
+            </li>
+          </ul>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="View_Projects.jsp">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="View_Reports.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">View Projects</span>
+            <span class="nav-link-text">View Reports</span>
           </a>
         </li>
         
@@ -440,8 +491,8 @@
 					      		        
 					      				  try
 					      			        { 
-					      					  ps = con.prepareStatement("SELECT * FROM arken.project_master;");
-					      					  
+					      					  ps = con.prepareStatement("SELECT project_id,project_name FROM arken.project_master where cus_id=?;");
+					      					  ps.setInt(1, cid);
 					      					  rs = ps.executeQuery();
 					      					 %>
 					      					

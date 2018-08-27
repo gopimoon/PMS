@@ -26,18 +26,19 @@ public class SaveProject extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter pw=response.getWriter();
 		
+		int cid = Integer.parseInt(request.getParameter("cid"));
 		String projectname  = request.getParameter("project_name");
 	
 		int status = 0;
 		int pid = 0;
 		SaveProjectDB sp = new SaveProjectDB();
-		status = sp.SaveProject(projectname);
+		status = sp.SaveProject(cid,projectname);
 		try
 		{
 			InitCon it = new InitCon();
 			
 			Connection con = it.InitConnection();
-			PreparedStatement ps1=con.prepareStatement("SELECT MAX(project_id )FROM project_master");
+			PreparedStatement ps1=con.prepareStatement("SELECT MAX(project_id)FROM project_master");
 			ResultSet rs=ps1.executeQuery();
 			while(rs.next())
 			{

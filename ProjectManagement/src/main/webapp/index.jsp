@@ -8,7 +8,6 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Arken PMS</title>
-  
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -17,7 +16,7 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-
+		
  
 </head>
 
@@ -38,33 +37,63 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Create Projects</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Add Categories</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents3">
+            <li>
+              <a href="Add_Customers.jsp">Add Customers</a>
+            </li>	
+            <li>
+              <a href="Add_Suppliers.jsp">Add Suppliers</a>
+            </li>
+            <li>
+              <a href="Add_Items.jsp">Add Items</a>
+            </li>
+            <li>
+              <a href="Add_Models.jsp">Add Models</a>
+            </li>
+          </ul>
         </li>
-        
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="View_Projects.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">View Projects</span>
+       
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Projects</span>
           </a>
-        </li>	
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="Customer_Details.jsp">Create Projects</a>
+            </li>
+            <li>
+              <a href="View_Customer.jsp">Edit Projects</a>
+            </li>
+          </ul>
+        </li>
+       	
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSuppliersComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Suppliers</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponents">
+          <ul class="sidenav-second-level collapse" id="collapseSuppliersComponents">
             <li>
-              <a href="Suppliers.jsp">Create Suppliers PO</a>
+              <a href="Suppliers_CustomerDetails.jsp">Create Suppliers PO</a>
             </li>
             <li>
-              <a href="View_Suppliers.jsp">View Suppiers PO</a>
+              <a href="View_CustomerDetails.jsp">Edit Suppiers PO</a>
             </li>
           </ul>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="View_Reports.jsp">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">View Reports</span>
+          </a>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
@@ -75,13 +104,13 @@
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
               <a href="navbar.html">Navbar</a>
-            </li>
+            </li>	
             <li>
               <a href="cards.html">Cards</a>
             </li>
           </ul>
         </li>
-        
+        	
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
@@ -428,23 +457,12 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i>Projects</div>
+          <i></i>Dashboard</div>
         <div  class="card-body" >
-         <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="SaveProject" method="post">
+         <div id="myAreaChart" style="height: 525px; width: 80%;" >
          
-        
-			<div class="form-group">
-				<label class="col-md-2 control-label" ><b>Project Name</b></label>  
-							   
-					  <input type="text"  name="project_name" id="project_name" >
-					  <input type="submit"  value="Save" />
-									  
-									  
-			</div>
-		</form>
-		
-	</div>
+		<h1>Working inprogress</h1>
+		</div>
          </div>
         </div>
        <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->

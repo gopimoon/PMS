@@ -1,16 +1,15 @@
 <%
 
-
 int cid = Integer.parseInt(request.getParameter("cus_id"));
 
 %>
 
 <!DOCTYPE html>
-<%@page import="com.arken.connection.InitCon"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="com.arken.connection.InitCon"%>
 <html lang="en">
 
 <head>
@@ -476,7 +475,8 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
           <i></i><b>View Project List</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
+         <form action="View_Reports_2.jsp" method="post">
+         
          
 								<div class="form-group">
 										<legend>Select Project Name :</legend><br>

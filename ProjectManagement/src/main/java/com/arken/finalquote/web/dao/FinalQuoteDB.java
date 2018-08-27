@@ -98,22 +98,22 @@ public class FinalQuoteDB
 		try
 		{
 			con.setAutoCommit(false);
-			ps=con.prepareStatement("UPDATE `arken`.`final_quote` SET `description` = ?,`model` = ?,`qty` = ?,`units` = ?,"
+			ps=con.prepareStatement("UPDATE `arken`.`final_quote` SET `qty` = ?,"
 					+ "`unitprice` = ?,`totalprice` = ?,`insunitprice` = ?,`instotalprice` = ? WHERE project_id = ? and s_no = ? and `quote_id` = ?");
 			
 			
 			
-			ps.setString(1, fqb.getDescription());
-			ps.setString(2, fqb.getModel());
-			ps.setString(3, fqb.getQty());
-			ps.setString(4, fqb.getUnits());
-			ps.setString(5, fqb.getUnitprice());
-			ps.setString(6, fqb.getTotalprice());
-			ps.setString(7, fqb.getInsunitprice());
-			ps.setString(8, fqb.getInstotalprice());
-			ps.setInt(9, fqb.getProjectid());
-			ps.setInt(10, fqb.getSno());
-			ps.setInt(11, fqb.getQuoteid());
+			//ps.setString(1, fqb.getDescription());
+			//ps.setString(2, fqb.getModel());
+			ps.setString(1, fqb.getQty());
+			//ps.setString(4, fqb.getUnits());
+			ps.setString(2, fqb.getUnitprice());
+			ps.setString(3, fqb.getTotalprice());
+			ps.setString(4, fqb.getInsunitprice());
+			ps.setString(5, fqb.getInstotalprice());
+			ps.setInt(6, fqb.getProjectid());
+			ps.setInt(7, fqb.getSno());
+			ps.setInt(8, fqb.getQuoteid());
 			
 			ps.executeUpdate();
 			con.commit();
@@ -146,15 +146,18 @@ public class FinalQuoteDB
         
 		  try
 	        {
-			  ps = con.prepareStatement("SELECT * FROM arken.final_quote where project_id = ?");
+			  //ps = con.prepareStatement("SELECT * FROM arken.final_quote where project_id = ?");
+			  
+			  ps = con.prepareStatement("SELECT s_no,item_name,model,qty,units,unitprice,totalprice,insunitprice,instotalprice FROM arken.final_quote,arken.items where final_quote.description=items.itemid and project_id=?;");
 			  ps.setInt(1, pid);
-			 
 			  rs1 = ps.executeQuery();
 			 
 			  while (rs1.next())
 			  {
 				  alFinalQuote = new ArrayList();
 				  
+				  alFinalQuote.add(rs1.getString(1));
+				  alFinalQuote.add(rs1.getString(2));
 				  alFinalQuote.add(rs1.getString(3));
 				  alFinalQuote.add(rs1.getString(4));
 				  alFinalQuote.add(rs1.getString(5));
@@ -162,8 +165,6 @@ public class FinalQuoteDB
 				  alFinalQuote.add(rs1.getString(7));
 				  alFinalQuote.add(rs1.getString(8));
 				  alFinalQuote.add(rs1.getString(9));
-				  alFinalQuote.add(rs1.getString(10));
-				  alFinalQuote.add(rs1.getString(11));
 				  
 				  Final_Quote.add(alFinalQuote);
 			  }

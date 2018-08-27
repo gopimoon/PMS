@@ -90,10 +90,10 @@ public class FinalQuote extends HttpServlet {
 			int projectid =Integer.parseInt(request.getParameter("projectid"));
 			int quoteid = Integer.parseInt(request.getParameter("quoteid"));
 			int sno=Integer.parseInt(request.getParameter("sno"));
-			String description = request.getParameter("description");
-			String model = request.getParameter("model");
+			//String description = request.getParameter("description");
+			//String model = request.getParameter("model");
 			String qty = request.getParameter("qty");
-			String units = request.getParameter("units");
+			//String units = request.getParameter("units");
 			String unitprice = request.getParameter("unitprice");
 			String totalprice = request.getParameter("totalprice");
 			String insunitprice = request.getParameter("insunitprice");
@@ -105,10 +105,10 @@ public class FinalQuote extends HttpServlet {
 			fqb.setProjectid(projectid);
 			fqb.setQuoteid(quoteid);
 			fqb.setSno(sno);
-			fqb.setDescription(description);
-			fqb.setModel(model);
+			//fqb.setDescription(description);
+			//fqb.setModel(model);
 			fqb.setQty(qty);
-			fqb.setUnits(units);
+			//fqb.setUnits(units);
 			fqb.setUnitprice(unitprice);
 			fqb.setTotalprice(totalprice);
 			fqb.setInsunitprice(insunitprice);

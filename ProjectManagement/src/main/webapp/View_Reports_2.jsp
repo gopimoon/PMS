@@ -1,16 +1,26 @@
+
+<%@page import="java.util.Iterator"%>
+<%@page import="com.arken.reports.dao.ReportsDB"%>
+<%@page import="java.util.ArrayList"%>
 <%
 
+	int pid = Integer.parseInt(request.getParameter("project_name"));
+	
+	ReportsDB rdb=new ReportsDB();
 
-int cid = Integer.parseInt(request.getParameter("cus_id"));
+	ArrayList al;
+	
+	al = new ArrayList();
+	al = rdb.CustomerReports(pid);
+	
+	
+	ArrayList al1;
+	
+	al1 = new ArrayList();
+	al1 = rdb.ConsolidateReports(pid);	
 
 %>
-
 <!DOCTYPE html>
-<%@page import="com.arken.connection.InitCon"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
 <html lang="en">
 
 <head>
@@ -20,7 +30,6 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Arken PMS</title>
-  
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -29,10 +38,7 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-
-   <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
-   
-   
+		
  
 </head>
 
@@ -473,57 +479,103 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i><b>View Project List</b></div>
+          <i></i>Projects</div>
         <div  class="card-body" >
-         <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
+         <div id="myAreaChart" style="height: 600px; width: 80%;" >
          
+		<div class="form-group">
+										   <label class="col-md-2 control-label" >Customer Purchase Order</label>  
+										  	
+											    <table  class="table-bordered table-hover" id="supplierstable1">
+												<tr>
+												<th class="text-center" >Items Name</th>
+												<th class="text-center" >Items Counts</th>
+												</tr>
+									
+									 
+									 <%
+						                int count = 0;
+						                String color = "#F9EBB3";
+						             
+						                if (!al.isEmpty()) 
+						               {
+						                  
+						                    Iterator itr = al.iterator();
+						                    
+						                    while (itr.hasNext()) 
+						                    {
+						 
+						                        if ((count % 2) == 0) 
+						                        {
+						                            color = "#eeffee";
+						                        }
+						                        count++;
+						                        ArrayList pList = (ArrayList) itr.next();
+						           		 %>
+								            <tr style="background-color:<%=color%>;">
+								            
+								                <td class="text-center"><%=pList.get(0)%></td>
+								                <td class="text-center"><%=pList.get(1)%></td>
+								                
+								            </tr>
+						            	<%
+						                   }
+						                }
+						                
+									  %>
+									  
+									  
+									  
+								
+							</table>
+							</div>
+							
+								
+								
 								<div class="form-group">
-										<legend>Select Project Name :</legend><br>
-										
-										<select name = "project_name" class="form-control">
-										<option value="">Select</option>
-										<%
-										InitCon it = new InitCon();
-										Connection con = it.InitConnection();
-					      				
-					      				PreparedStatement ps;
-					      				ResultSet rs;
-					      		        
-					      				  try
-					      			        { 
-					      					  ps = con.prepareStatement("SELECT project_id,project_name FROM arken.project_master where cus_id=?;");
-					      					  ps.setInt(1, cid);
-					      					  rs = ps.executeQuery();
-					      					 %>
-					      					
-					      					<%
-					      					  while (rs.next())
-					      					  {%>
-												  <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
-											<%	  
-												
-					      					  }
-					      					  
-					      					  con.close();
-					      					  
-					      					}
-					      			        catch (SQLException e)
-					      			        {
-					      			        	e.printStackTrace();
-					      			        	
-					      			        }
-										
-										%>
-										</select>
-										
-								</div>
-								<input type="submit" class="button" value="View">
-								</form>
-								</div>
-        
+										   <label class="col-md-2 control-label" >Consolidated Purchase Order</label>  
+										  	
+											    <table  class="table-bordered table-hover" id="supplierstable1">
+												<tr>
+												<th class="text-center" >Items Name</th>
+												<th class="text-center" >Items Counts</th>
+												</tr>
+									
+									 
+									 <%
+						                int count1 = 0;
+						                String color1 = "#F9EBB3";
+						             
+						                if (!al1.isEmpty()) 
+						               {
+						                  
+						                    Iterator itr1 = al1.iterator();
+						                    
+						                    while (itr1.hasNext()) 
+						                    {
+						 
+						                        if ((count1 % 2) == 0) 
+						                        {
+						                            color1 = "#eeffee";
+						                        }
+						                        count1++;
+						                        ArrayList pList1 = (ArrayList) itr1.next();
+						           		 %>
+								            <tr style="background-color:<%=color%>;">
+								            
+								                <td class="text-center"><%=pList1.get(0)%></td>
+								                <td class="text-center"><%=pList1.get(1)%></td>
+								                
+								            </tr>
+						            	<%
+						                   }
+						                }
+						                
+									  %>
+							</table>
+							</div> 
+						
          </div>
-         
         </div>
        <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
       </div>

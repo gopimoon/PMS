@@ -1,16 +1,9 @@
-<%
-
-
-int cid = Integer.parseInt(request.getParameter("cus_id"));
-
-%>
-
 <!DOCTYPE html>
-<%@page import="com.arken.connection.InitCon"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="com.arken.connection.InitCon"%>
 <html lang="en">
 
 <head>
@@ -473,15 +466,16 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i><b>View Project List</b></div>
+          <i></i><b>Customer List</b></div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
+         <form action="Suppliers.jsp" method="post">
+         
          
 								<div class="form-group">
-										<legend>Select Project Name :</legend><br>
+										<legend>Select Customer Name :</legend><br>
 										
-										<select name = "project_name" class="form-control">
+										<select name = "cus_id" id="cus_id" class="form-control">
 										<option value="">Select</option>
 										<%
 										InitCon it = new InitCon();
@@ -492,8 +486,8 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
 					      		        
 					      				  try
 					      			        { 
-					      					  ps = con.prepareStatement("SELECT project_id,project_name FROM arken.project_master where cus_id=?;");
-					      					  ps.setInt(1, cid);
+					      					  ps = con.prepareStatement("SELECT cus_id,cus_name FROM arken.customer_master;");
+					      					  
 					      					  rs = ps.executeQuery();
 					      					 %>
 					      					

@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.arken.customerquote.web.model.CustomerQuoteBean;
 import com.arken.suppliers.web.dao.SuppliersDB;
 import com.arken.suppliers.web.model.SuppliersBean;
 
@@ -27,6 +25,7 @@ public class SuppliersServlet extends HttpServlet {
 		PrintWriter pw=response.getWriter();
 		
 		int status = 0;
+		int status1 = 0;
 		String TableIdentifier = request.getParameter("TableIdentifier");
 		
 		if(TableIdentifier.equals("suppliertable"))
@@ -70,8 +69,16 @@ public class SuppliersServlet extends HttpServlet {
 			
 			try 
 			{
-				status = sdb.SaveSupplierQuote(sb);
+				//status1 = sdb.getCheckPOs(projectid, description, po, qty);
 				
+				/*if(status1>0)
+				{
+					String error = "qty mismatch";	
+				}
+				else
+				{*/
+					status = sdb.SaveSupplierQuote(sb);
+				/*}*/
 				if(status>0)
 				{
 					response.sendRedirect("Suppliers_2.jsp?projectid="+sb.getProjectid()+"&sid="+sb.getSupplierid()+"&po="+sb.getPoid()+"");
@@ -92,14 +99,14 @@ public class SuppliersServlet extends HttpServlet {
 			String updateflag = request.getParameter("updateflag");
 			int projectid =Integer.parseInt(request.getParameter("projectid"));
 			int sno=Integer.parseInt(request.getParameter("sno"));
-			String description = request.getParameter("description");
-			String model = request.getParameter("model");
+			//String description = request.getParameter("description");
+			//String model = request.getParameter("model");
 			String qty = request.getParameter("qty");
 			String units = request.getParameter("units");
 			String unitprice = request.getParameter("unitprice");
 			String totalprice = request.getParameter("totalprice");
-			String insunitprice = request.getParameter("insunitprice");
-			String instotalprice = request.getParameter("instotalprice");
+			//String insunitprice = request.getParameter("insunitprice");
+			//String instotalprice = request.getParameter("instotalprice");
 			int sid = Integer.parseInt(request.getParameter("supplierid"));
 			int po = Integer.parseInt(request.getParameter("po"));
 			
@@ -110,14 +117,14 @@ public class SuppliersServlet extends HttpServlet {
 			sb.setUpdateflag(updateflag);
 			sb.setProjectid(projectid);
 			sb.setSno(sno);
-			sb.setDescription(description);
-			sb.setModel(model);
+			//sb.setDescription(description);
+			//sb.setModel(model);
 			sb.setQty(qty);
 			sb.setUnits(units);
 			sb.setUnitprice(unitprice);
 			sb.setTotalprice(totalprice);
-			sb.setInsunitprice(insunitprice);
-			sb.setInstotalprice(instotalprice);
+			//sb.setInsunitprice(insunitprice);
+			//sb.setInstotalprice(instotalprice);
 			sb.setSupplierid(sid);
 			sb.setPoid(po);
 			

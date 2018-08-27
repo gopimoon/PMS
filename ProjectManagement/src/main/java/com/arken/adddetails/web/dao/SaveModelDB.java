@@ -1,16 +1,15 @@
-package com.arken.projectname.web.dao;
+package com.arken.adddetails.web.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
 import com.arken.connection.InitCon;
 
-public class SaveProjectDB 
+public class SaveModelDB 
 {
-	
-	public static int SaveProject(int cid,String projectname)
+
+	public static int SaveModel(String model_name)
 	{
 		int status = 0;
 			try
@@ -21,9 +20,8 @@ public class SaveProjectDB
 				PreparedStatement ps;
 				
 				con.setAutoCommit(false);
-				ps = con.prepareStatement("insert into project_master(cus_id,project_name) values(?,?)");
-				ps.setInt(1, cid);
-				ps.setString(2, projectname);
+				ps = con.prepareStatement("insert into model(model_name) values(?)");
+				ps.setString(1, model_name);
 				ps.executeUpdate();
 				con.commit();
 				

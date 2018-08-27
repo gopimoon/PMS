@@ -80,10 +80,10 @@ public class CustomerQuote extends HttpServlet {
 			int projectid =Integer.parseInt(request.getParameter("projectid"));
 			int quoteid = Integer.parseInt(request.getParameter("quoteid"));
 			int sno=Integer.parseInt(request.getParameter("sno"));
-			String description = request.getParameter("description");
-			String model = request.getParameter("model");
+			//String description = request.getParameter("description");
+			//String model = request.getParameter("model");
 			String qty = request.getParameter("qty");
-			String units = request.getParameter("units");
+			//String units = request.getParameter("units");
 			String unitprice = request.getParameter("unitprice");
 			String totalprice = request.getParameter("totalprice");
 			String insunitprice = request.getParameter("insunitprice");
@@ -95,10 +95,10 @@ public class CustomerQuote extends HttpServlet {
 			cqb.setProjectid(projectid);
 			cqb.setQuoteid(quoteid);
 			cqb.setSno(sno);
-			cqb.setDescription(description);
-			cqb.setModel(model);
+			//cqb.setDescription(description);
+			//cqb.setModel(model);
 			cqb.setQty(qty);
-			cqb.setUnits(units);
+			//cqb.setUnits(units);
 			cqb.setUnitprice(unitprice);
 			cqb.setTotalprice(totalprice);
 			cqb.setInsunitprice(insunitprice);

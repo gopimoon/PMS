@@ -67,7 +67,7 @@
    
 	$(document).ready(function() 
 	{
-		            $('#investtable').click(function ()
+		            $('#supplierstable').click(function ()
 			        {
 		            	var updateflag = $('#updateflag').val();
 	                	var projectid = $('#projectid').val();
@@ -140,7 +140,7 @@
 		      	  	{      
 		      		
 		            	
-		      		 if((id=="investigationtable"))
+		      		 if((id=="supplierstable"))
 		      		   { 
 		      			 	
 		      				
@@ -265,17 +265,62 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Create Projects</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Add Categories</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents3">
+            <li>
+              <a href="Add_Customers.jsp">Add Customers</a>
+            </li>	
+            <li>
+              <a href="Add_Suppliers.jsp">Add Suppliers</a>
+            </li>
+            <li>
+              <a href="Add_Items.jsp">Add Items</a>
+            </li>
+            <li>
+              <a href="Add_Models.jsp">Add Models</a>
+            </li>
+          </ul>
+        </li>
+       
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Projects</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="Customer_Details.jsp">Create Projects</a>
+            </li>
+            <li>
+              <a href="View_Customer.jsp">Edit Projects</a>
+            </li>
+          </ul>
+        </li>
+       	
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSuppliersComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Suppliers</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseSuppliersComponents">
+            <li>
+              <a href="Suppliers_CustomerDetails.jsp">Create Suppliers PO</a>
+            </li>
+            <li>
+              <a href="View_CustomerDetails.jsp">Edit Suppiers PO</a>
+            </li>
+          </ul>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="View_Projects.jsp">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="View_Reports.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">View Projects</span>
+            <span class="nav-link-text">View Reports</span>
           </a>
         </li>
         
@@ -640,7 +685,7 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i>Final Quote</div>
+          <i></i>Suppliers PO</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
          <form action=# method="post">
@@ -650,16 +695,16 @@
          <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
          <input type="hidden" name="supplierid" id="supplierid" value="<%=sid%>">
          <input type="hidden" name="poid" id="poid" value="<%=po%>">
-         <legend>Final Quote PO</legend>
+         <legend>Suppliers PO</legend>
 								
 											<div class="form-group">
 										   <label class="col-md-2 control-label" >Purchase Order</label>  
 										  	
-											    <table  class="table-bordered table-hover" id="investigationtable">
+											    <table  class="table-bordered table-hover" id="supplierstable1">
 												<tr>
 												<th class="text-center" colspan="5">Mapleton Apartment</th>
 												<th class="text-center" colspan="2">Supply of Meterials</th>
-												<th class="text-center" colspan="2">Installation of Materials</th>
+												<!-- <th class="text-center" colspan="2">Installation of Materials</th> -->
 												</tr>
 												<tr>
 													<th class="text-center" rowspan="2">S.No</th>
@@ -669,8 +714,8 @@
 													<th class="text-center" rowspan="2">Units</th>
 													<th class="text-center" rowspan="">Unit Price</th>
 													<th class="text-center" colspan="">Total Price</th>
-													<th class="text-center" rowspan="">Unit Price</th>
-													<th class="text-center" rowspan="">Total Price</th>
+													<!-- <th class="text-center" rowspan="">Unit Price</th>
+													<th class="text-center" rowspan="">Total Price</th> -->
 												</tr>
 												<tr>
 												</tr>
@@ -704,8 +749,8 @@
 								                <td class="text-center"><%=pList.get(4)%></td>
 								                <td class="text-center"><%=pList.get(5)%></td>
 								                <td class="text-center"><%=pList.get(6)%></td>
-								                <td class="text-center"><%=pList.get(7)%></td>
-								                <td class="text-center"><%=pList.get(8)%></td>
+								                <%-- <td class="text-center"><%=pList.get(7)%></td>
+								                <td class="text-center"><%=pList.get(8)%></td> --%>
 								               
 								            </tr>
 						            	<%
@@ -739,8 +784,8 @@
 								            <tr>
 									  			<td colspan="6"><b>Sub Total</b></td>
 								                <td class="text-center"><b><%=pList2.get(0)%></b></td>
-												<td class="text-center"></td>
-									    		<td class="text-center"><b><%=pList2.get(1)%></b></td>
+												<%-- <td class="text-center"></td>
+									    		<td class="text-center"><b><%=pList2.get(1)%></b></td> --%>
 								              </tr>
 											<%-- <tr>
 													
@@ -785,7 +830,7 @@
 												<select id="description" name="description">
 											 	 <option>Select</option>
 											  <%
-											 
+											 	
 							      			  
 					      			 			
 											  	InitCon it = new InitCon();
@@ -804,7 +849,7 @@
 							      					<%
 							      					  while (rs2.next())
 							      					  {%>
-														  <option value="<%=rs2.getString(2)%>"><%=rs2.getString(2)%></option>
+														  <option value="<%=rs2.getInt(1)%>"><%=rs2.getString(2)%></option>
 													<%	  
 														
 							      					  }
@@ -830,16 +875,16 @@
 										<td><input type="text" name="units" id="units" class="form-table" maxlength="25" ></td>
 									    <td><input type="text" name="unitprice" id="unitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
 									    <td><input type="text" name="totalprice" id="totalprice" class="form-table" maxlength="25" ></td>
-										<td><input type="text" name="insunitprice" id="insunitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
-								 		<td><input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" ></td>
+										<!-- <td><input type="text" name="insunitprice" id="insunitprice" onChange="multiply()" class="form-table" maxlength="25" ></td>
+								 		<td><input type="text" name="instotalprice" id="instotalprice" class="form-table" maxlength="25" ></td> -->
 							 			
 									</tr>
 									  
 									
 									  </table>	
 									 
-									  <input type="button"  class="button" id="investigationtable" onclick="insert('investigationtable')" value="Insert Row">
-									  <input type="button" class="button" id="investtable" value="Save Row" />
+									  <!-- <input type="button"  class="button" id="supplierstable1" onclick="insert('supplierstable1')" value="Insert Row"> -->
+									  <input type="button" class="button" id="supplierstable" value="Save Row" />
 									  
 									  
 								</div>

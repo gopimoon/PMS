@@ -3,5 +3,55 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+	<servlet>
+		<servlet-name>AutoComplete</servlet-name>
+		<display-name>AutoComplete</display-name>
+		<description></description>
+		<servlet-class>com.arken.adddetails.web.AutoComplete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AutoComplete</servlet-name>
+		<url-pattern>/AutoComplete</url-pattern>
+	</servlet-mapping>
+	<!-- <servlet>
+		<servlet-name>SaveModels</servlet-name>
+		<display-name>SaveModels</display-name>
+		<description></description>
+		<servlet-class>com.arken.adddetails.web.SaveModels</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SaveModels</servlet-name>
+		<url-pattern>/SaveModels</url-pattern>
+	</servlet-mapping> -->
+	<!-- <servlet>
+		<servlet-name>SaveSupplier</servlet-name>
+		<display-name>SaveSupplier</display-name>
+		<description></description>
+		<servlet-class>com.arken.suppliers.web.SaveSupplier</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SaveItems</servlet-name>
+		<display-name>SaveItems</display-name>
+		<description></description>
+		<servlet-class>com.arken.adddetails.web.SaveItems</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SaveSupplier</servlet-name>
+		<url-pattern>/SaveSupplier</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SaveItems</servlet-name>
+		<url-pattern>/SaveItems</url-pattern>
+	</servlet-mapping> -->
+	<!-- <servlet>
+		<servlet-name>SaveCustomer</servlet-name>
+		<display-name>SaveCustomer</display-name>
+		<description></description>
+		<servlet-class>com.arken.projectname.web.SaveCustomer</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SaveCustomer</servlet-name>
+		<url-pattern>/SaveCustomer</url-pattern>
+	</servlet-mapping> -->
 	
 </web-app>

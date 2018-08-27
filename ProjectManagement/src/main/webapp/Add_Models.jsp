@@ -41,17 +41,62 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="index.jsp">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Final Quote</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Add Categories</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents3">
+            <li>
+              <a href="Add_Customers.jsp">Add Customers</a>
+            </li>	
+            <li>
+              <a href="Add_Suppliers.jsp">Add Suppliers</a>
+            </li>
+            <li>
+              <a href="Add_Items.jsp">Add Items</a>
+            </li>
+            <li>
+              <a href="Add_Models.jsp">Add Models</a>
+            </li>
+          </ul>
+        </li>
+       
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Projects</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="Customer_Details.jsp">Create Projects</a>
+            </li>
+            <li>
+              <a href="View_Customer.jsp">Edit Projects</a>
+            </li>
+          </ul>
+        </li>
+       	
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSuppliersComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Suppliers</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseSuppliersComponents">
+            <li>
+              <a href="Suppliers_CustomerDetails.jsp">Create Suppliers PO</a>
+            </li>
+            <li>
+              <a href="View_CustomerDetails.jsp">Edit Suppiers PO</a>
+            </li>
+          </ul>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="Customer_Quote.jsp?project_id=<%=1%>">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="View_Reports.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Customer Quote</span>
+            <span class="nav-link-text">View Reports</span>
           </a>
         </li>
         
@@ -416,10 +461,10 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i>Final Quote</div>
+          <i></i>Items</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="#" method="post">
+         <form action="SaveModels" method="post">
          
          <input type="hidden" name="projectid" id="projectid" value="<%=1%>">
          <input type="hidden" name="updateflag" id="updateflag" value="NO">
@@ -427,15 +472,18 @@
          
 								
 								<div class="form-group">
-										<legend>Add Items</legend>
-										<input type="text" name="item" id="item" class="form-table">   
+										<legend>Add Models</legend>
+										<input type="text" name="Model" id="Model" class="form-table">   
 									  
-									  	<input type="submit" class="button" id="investtable" value="Save" />
+									  	<input type="submit" class="button"  value="Save" />
 								</div>
 								</form>
+								 
 								</div>
          </div>
         </div>
+        
+       
        <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
       </div>
      

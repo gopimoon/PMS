@@ -290,6 +290,27 @@
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Add Categories</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents3">
+            <li>
+              <a href="Add_Customers.jsp">Add Customers</a>
+            </li>	
+            <li>
+              <a href="Add_Suppliers.jsp">Add Suppliers</a>
+            </li>
+            <li>
+              <a href="Add_Items.jsp">Add Items</a>
+            </li>
+            <li>
+              <a href="Add_Models.jsp">Add Models</a>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Quotations</span>
@@ -304,10 +325,41 @@
           </ul>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="View_Projects.jsp">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Projects</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="Customer_Details.jsp">Create Projects</a>
+            </li>
+            <li>
+              <a href="View_Customer.jsp">Edit Projects</a>
+            </li>
+          </ul>
+        </li>
+       	
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSuppliersComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Suppliers</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseSuppliersComponents">
+            <li>
+              <a href="Suppliers_CustomerDetails.jsp">Create Suppliers PO</a>
+            </li>
+            <li>
+              <a href="View_CustomerDetails.jsp">Edit Suppiers PO</a>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="View_Reports.jsp">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">View Projects</span>
+            <span class="nav-link-text">View Reports</span>
           </a>
         </li>
         
@@ -672,7 +724,7 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i>Final Quote</div>
+          <i></i>Suppliers PO</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
          <%-- <form action="FinalQuote" method="post">
@@ -681,7 +733,7 @@
          <input type="hidden" name="updateflag" id="updateflag" value="YES">
          <input type="hidden" name="quoteid" id="quoteid" value="<%=pid%>">
          <input type="hidden" name="TableIdentifier" id="TableIdentifier" value="updatequotetable"> --%>
-         <legend>Final Quote PO</legend>
+         <legend>Suppliers PO</legend>
 								
 											<div class="form-group">
 										   <label class="col-md-2 control-label" >Purchase Order</label>  
@@ -690,7 +742,7 @@
 												<tr>
 												<th class="text-center" colspan="5">Mapleton Apartment</th>
 												<th class="text-center" colspan="2">Supply of Meterials</th>
-												<th class="text-center" colspan="2">Installation of Materials</th>
+												<!-- <th class="text-center" colspan="2">Installation of Materials</th> -->
 												</tr>
 												<tr>
 													<th class="text-center" rowspan="2">S.No</th>
@@ -700,8 +752,8 @@
 													<th class="text-center" rowspan="2">Units</th>
 													<th class="text-center" rowspan="">Unit Price</th>
 													<th class="text-center" colspan="">Total Price</th>
-													<th class="text-center" rowspan="">Unit Price</th>
-													<th class="text-center" rowspan="">Total Price</th>
+													<!-- <th class="text-center" rowspan="">Unit Price</th>
+													<th class="text-center" rowspan="">Total Price</th> -->
 												</tr>
 												<tr>
 												</tr>
@@ -742,8 +794,8 @@
 								                <td class="text-center"><input type="text" name="units" id="units<%=pList.get(0)%>" value="<%=pList.get(4)%>" readonly></td>
 								                <td class="text-center"><input type="text" name="unitprice" id="unitprice<%=pList.get(0)%>" value="<%=pList.get(5)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
 								                <td class="text-center"><input type="text" name="totalprice" id="totalprice<%=pList.get(0)%>" value="<%=pList.get(6)%>" readonly></td>
-								                <td class="text-center"><input type="text" name="insunitprice" id="insunitprice<%=pList.get(0)%>" value="<%=pList.get(7)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
-								                <td class="text-center"><input type="text" name="instotalprice" id="instotalprice<%=pList.get(0)%>" value="<%=pList.get(8)%>" readonly></td>
+								                <%-- <td class="text-center"><input type="text" name="insunitprice" id="insunitprice<%=pList.get(0)%>" value="<%=pList.get(7)%>" onChange="multiply('qty<%=pList.get(0)%>','unitprice<%=pList.get(0)%>','totalprice<%=pList.get(0)%>','insunitprice<%=pList.get(0)%>','instotalprice<%=pList.get(0)%>');"></td>
+								                <td class="text-center"><input type="text" name="instotalprice" id="instotalprice<%=pList.get(0)%>" value="<%=pList.get(8)%>" readonly></td> --%>
 								              <%--  <td><a href="" data-id="<%=pList.get(0)%>" class="clik_for_fetch">Update</a></td>
 								               <td><input type="button"  onClick="writeabdata(this.sno,this.qty);">check</a></td> --%>
 									  			<td><input type="submit" value="Save Row"></td>
@@ -780,8 +832,8 @@
 								            <tr>
 									  			<td colspan="6"><b>Sub Total</b></td>
 								                <td class="text-center"><b><input value="<%=pList2.get(0)%>" readonly></b></td>
-												<td class="text-center"></td>
-									    		<td class="text-center"><b><input value="<%=pList2.get(1)%>" readonly></b></td>
+												<%-- <td class="text-center"></td>
+									    		<td class="text-center"><b><input value="<%=pList2.get(1)%>" readonly></b></td> --%>
 								              </tr>
 											<%-- <tr>
 													

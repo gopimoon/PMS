@@ -15,6 +15,8 @@ import com.arken.suppliers.web.model.SuppliersBean;
 public class SuppliersDB 
 {
 
+	// Function for Save the supplier_master table 
+	
 	public static int SavePO(int pid,int sid) throws SQLException
 	{
 		
@@ -46,6 +48,7 @@ public class SuppliersDB
 	}	
 	
 	
+	// Function for select the max po_id from suppliers master table
 	
 	public static int SelectMaxPOid(int pid,int sid) throws SQLException
 	{
@@ -80,6 +83,9 @@ public class SuppliersDB
 		
 		return po;
 	}	
+	
+	
+	// Function for Save the Supplier Quote table
 	
 	public static int SaveSupplierQuote(SuppliersBean sb) throws SQLException
 	{
@@ -124,9 +130,7 @@ public class SuppliersDB
 	
 	
 	
-	//Function for update the Final Quote value
-	
-	
+	// Function for update the Suppliers Quote value
 	
 		public static int UpdateSupplierPO(SuppliersBean sb) throws SQLException
 		{
@@ -139,21 +143,18 @@ public class SuppliersDB
 			try
 			{
 				con.setAutoCommit(false);
-				ps=con.prepareStatement("UPDATE `arken`.`supplier_quote` SET `description` = ?,`model` = ?,`qty` = ?,`units` = ?,"
-						+ "`unitprice` = ?,`totalprice` = ?,`insunitprice` = ?,`instotalprice` = ? WHERE `sup_id` = ? and `s_no` = ?");
+				ps=con.prepareStatement("UPDATE `arken`.`supplier_quote` SET `qty` = ?,`units` = ?,"
+						+ "`unitprice` = ?,`totalprice` = ? WHERE `sup_id` = ? and `s_no` = ?");
 				
 				
 				
-				ps.setString(1, sb.getDescription());
-				ps.setString(2, sb.getModel());
-				ps.setString(3, sb.getQty());
-				ps.setString(4, sb.getUnits());
-				ps.setString(5, sb.getUnitprice());
-				ps.setString(6, sb.getTotalprice());
-				ps.setString(7, sb.getInsunitprice());
-				ps.setString(8, sb.getInstotalprice());
-				ps.setInt(9, sb.getPoid());
-				ps.setInt(10, sb.getSno());
+				
+				ps.setString(1, sb.getQty());
+				ps.setString(2, sb.getUnits());
+				ps.setString(3, sb.getUnitprice());
+				ps.setString(4, sb.getTotalprice());
+				ps.setInt(5, sb.getPoid());
+				ps.setInt(6, sb.getSno());
 				
 				ps.executeUpdate();
 				con.commit();
@@ -170,7 +171,7 @@ public class SuppliersDB
 		}	
 	
 	
-	// Funciton for retriving data from Items table for display
+	// Function for retrieving data from Items table for display
 	
 	public static ArrayList getItems() throws SQLException
 	{
@@ -210,7 +211,7 @@ public class SuppliersDB
 	
 				
 				
-	// Funciton for retriving data from Total,Subtotal,GST,Discount Test table for display
+	// Function for retrieving data from Total,Sub total,GST,Discount Test table for display
 	
 	public static ArrayList getTotals(int po) throws SQLException
 	{
@@ -262,7 +263,7 @@ public class SuppliersDB
 	}
 	
 	
-	// Funciton for retriving data from suppliers table for display
+	// Function for retrieving data from suppliers table for display
 	
 			public static ArrayList getSupplierQuote(int po) throws SQLException
 			{
@@ -276,7 +277,7 @@ public class SuppliersDB
 		        
 				  try
 			        {
-					  ps = con.prepareStatement("SELECT * FROM arken.supplier_quote where sup_id = ?");
+					  ps = con.prepareStatement("select s_no,item_name,model,qty,units,unitprice,totalprice from arken.supplier_quote,arken.items where sup_id=? and supplier_quote.description=items.itemid;");
 					  ps.setInt(1, po);
 					 
 					  rs1 = ps.executeQuery();
@@ -285,15 +286,13 @@ public class SuppliersDB
 					  {
 						  alSupplierQuote = new ArrayList();
 						  
+						  alSupplierQuote.add(rs1.getString(1));
 						  alSupplierQuote.add(rs1.getString(2));
 						  alSupplierQuote.add(rs1.getString(3));
 						  alSupplierQuote.add(rs1.getString(4));
 						  alSupplierQuote.add(rs1.getString(5));
 						  alSupplierQuote.add(rs1.getString(6));
 						  alSupplierQuote.add(rs1.getString(7));
-						  alSupplierQuote.add(rs1.getString(8));
-						  alSupplierQuote.add(rs1.getString(9));
-						  alSupplierQuote.add(rs1.getString(10));
 						  
 						  Supplier_Quote.add(alSupplierQuote);
 					  }
@@ -306,5 +305,60 @@ public class SuppliersDB
 			        	
 			        }
 				return Supplier_Quote; 
+			}
+			
+			
+			
+			// Function for Checking the Customer PO and Suppliers PO for qty mismatch
+			
+			public static int getCheckPOs(int pid, String description,int poid,String currentqty) throws SQLException
+			{
+				
+				InitCon it = new InitCon();
+				Connection con = it.InitConnection();
+				PreparedStatement ps,ps1;
+				ResultSet rs,rs1;
+				int qty = 0;
+				int qty1 = 0;
+				int qty2 = 0;
+				int status1 = 0;
+				int currentqty1 = Integer.valueOf(currentqty);
+				  try
+				  {
+					  ps = con.prepareStatement("select qty from arken.customer_quote where project_id=? and description = ?;");
+					  ps.setInt(1, pid);
+					  ps.setString(2, description);
+					  rs = ps.executeQuery();
+					 
+					  while (rs.next())
+					  {
+						  qty = rs.getInt(1);
+					  }
+					  
+					  ps1 = con.prepareStatement("select sum(qty) from arken.supplier_quote where sup_id=? and description= ?");
+					  ps1.setInt(1, poid);
+					  ps1.setString(2, description);
+					  rs1 = ps1.executeQuery();
+					 
+					  while (rs1.next())
+					  {
+						  qty1 = rs1.getInt(1);
+					  }
+					  
+					  qty2 = qty1 + currentqty1;
+					  
+					  if(qty < qty2)
+					  {
+						  status1 =1;
+					  }
+					  
+					  con.close();
+				  }
+			      catch (SQLException e)
+			      {
+			    	  e.printStackTrace();
+			        	
+			       }
+				return status1; 
 			}
 }

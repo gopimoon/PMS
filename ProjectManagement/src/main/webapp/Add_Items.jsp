@@ -1,16 +1,4 @@
-<%
-
-
-int cid = Integer.parseInt(request.getParameter("cus_id"));
-
-%>
-
 <!DOCTYPE html>
-<%@page import="com.arken.connection.InitCon"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
 <html lang="en">
 
 <head>
@@ -473,58 +461,29 @@ int cid = Integer.parseInt(request.getParameter("cus_id"));
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i></i><b>View Project List</b></div>
+          <i></i>Items</div>
         <div  class="card-body" >
          <div id="myAreaChart" style="height: 477px; width: 80%;" >
-         <form action="Suppliers_1.jsp" method="post">
+         <form action="SaveItems" method="post">
          
+         <input type="hidden" name="projectid" id="projectid" value="<%=1%>">
+         <input type="hidden" name="updateflag" id="updateflag" value="NO">
+         <input type="hidden" name="quoteid" id="quoteid" value="1">
+         
+								
 								<div class="form-group">
-										<legend>Select Project Name :</legend><br>
-										
-										<select name = "project_name" class="form-control">
-										<option value="">Select</option>
-										<%
-										InitCon it = new InitCon();
-										Connection con = it.InitConnection();
-					      				
-					      				PreparedStatement ps;
-					      				ResultSet rs;
-					      		        
-					      				  try
-					      			        { 
-					      					  ps = con.prepareStatement("SELECT project_id,project_name FROM arken.project_master where cus_id=?;");
-					      					  ps.setInt(1, cid);
-					      					  rs = ps.executeQuery();
-					      					 %>
-					      					
-					      					<%
-					      					  while (rs.next())
-					      					  {%>
-												  <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
-											<%	  
-												
-					      					  }
-					      					  
-					      					  con.close();
-					      					  
-					      					}
-					      			        catch (SQLException e)
-					      			        {
-					      			        	e.printStackTrace();
-					      			        	
-					      			        }
-										
-										%>
-										</select>
-										
+										<legend>Add Items</legend>
+										<input type="text" name="item" id="item" class="form-table">   
+									  
+									  	<input type="submit" class="button"  value="Save" />
 								</div>
-								<input type="submit" class="button" value="View">
 								</form>
+								 
 								</div>
-        
          </div>
-         
         </div>
+        
+       
        <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
       </div>
      
